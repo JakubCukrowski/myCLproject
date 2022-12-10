@@ -1,5 +1,5 @@
 import React from "react";
-import {Route, Routes, useParams} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import Info from "./components/info/Info";
 import Gallery from "./components/gallery/Gallery";
