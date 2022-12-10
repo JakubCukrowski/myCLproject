@@ -1,0 +1,34 @@
+@import "colors";
+
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+
+  .social-media-container {
+    margin-top: 20px;
+    margin-bottom: 30px;
+
+    a {
+      color: $base-color;
+
+      &:hover {
+        color: #79672b;
+      }
+
+      &:nth-child(2) {
+        margin: 0 20px;
+      }
+    }
+  }
+
+  .copyright {
+    background-color: $base-color;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0;
+  }
+}

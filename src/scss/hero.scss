@@ -1,0 +1,35 @@
+.hero {
+  background: transparent url("../components/hero/image/pexels-creative-free-stock-971360.jpg") no-repeat center/cover;
+  position: relative;
+  //filter: blur(2px);
+  width: 100%;
+  height: 100vh;
+
+  &:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+}
+
+.hero-content {
+
+  position: absolute;
+  top: 30%;
+  left: 10%;
+
+  h1 {
+    color: $base-color;
+    width: 40%;
+    font-size: 50px;
+  }
+
+  p {
+    margin-top: 40px;
+    color: $base-color;
+    font-size: 24px;
+    width: 40%;
+  }
+}
