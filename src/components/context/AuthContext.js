@@ -31,7 +31,8 @@ export const AuthContextProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser)
-            navigate(`/dashboard/savevisit`)
+            if (currentUser) navigate(`/dashboard/savevisit`)
+            if (!currentUser) navigate("/")
             setLoading(false)
         })
 

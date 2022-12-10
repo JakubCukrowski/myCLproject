@@ -27,7 +27,7 @@ const Register = () => {
         e.preventDefault()
         try {
             await createAccount(data.email, data.password, data.displayName)
-            navigate(`${user.uid}/dashboard/savevisit`)
+            navigate(`/dashboard/savevisit`)
         } catch (err) {
             console.log(err.message)
         }
