@@ -4,18 +4,20 @@ import {db} from "../../../../firebase/firebase";
 import {useAuth} from "../../../context/AuthContext";
 import Table from 'react-bootstrap/Table';
 import {Button} from "react-bootstrap";
+import Spinner from "react-bootstrap/Spinner";
 
 const UserVisits = ()=> {
 
     const {user} = useAuth()
     const userCollection = doc(db, "users", user.uid)
     const [visits, setVisits] = useState([])
+    const [status, setStatus] = useState(false)
 
     useEffect(() => {
         const getCollection = async () => {
             const data = await getDoc(userCollection)
             setVisits(data.data().visits)
-            console.log(visits)
+            setStatus(true)
         }
 
         getCollection()
@@ -33,7 +35,8 @@ const UserVisits = ()=> {
 
     return (
         <div>
-            {visitCounts()}
+
+            {status === false ? <Spinner/> : visitCounts()}
             {visits.length > 0
                 ? <Table striped bordered hover>
                 <thead>

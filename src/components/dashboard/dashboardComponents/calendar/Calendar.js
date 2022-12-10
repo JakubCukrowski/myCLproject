@@ -13,6 +13,7 @@ const MyCalendar = () => {
             <div className="calendar-container">
                 <Calendar
                     onChange={setDate}
+                    tileClassName={"tile-content"}
                     value={date}
                     locale={"pl-PL"}
                     minDate={new Date()}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Outlet} from "react-router-dom";
 import {Link, useNavigate} from "react-router-dom";
 import {
@@ -10,11 +10,20 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useAuth} from "../context/AuthContext";
+import Spinner from "react-bootstrap/Spinner";
 
 const Dashboard = () => {
     const navigate = useNavigate()
     const {user, logout} = useAuth()
+    const [status, setStatus] = useState(false)
 
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setStatus(true)
+        }, 1000)
+
+        return () => timeout
+    }, [])
 
     const handleLogOut = async () => {
         try {
@@ -32,7 +41,7 @@ const Dashboard = () => {
             </div>
             <nav>
                 <div className="container">
-                    <h3>Witaj, {user.displayName}</h3>
+                    {status === false ? <Spinner/> : <h3>Witaj, {user.displayName}</h3>}
                     <Link to="uservisits">
                         <div className="icon-wrapper">
                             <FontAwesomeIcon fontSize={50} icon={faCalendarCheck}/>

@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import {useAuth} from "../context/AuthContext";
 import {useNavigate} from "react-router-dom";
 
-
 const Register = () => {
     const [data, setData] = useState({
         displayName: "",
@@ -10,7 +9,7 @@ const Register = () => {
         password: ""
     })
     const navigate = useNavigate()
-    const {createAccount, user} = useAuth()
+    const {createAccount} = useAuth()
 
 
     const handleInputs = (e) => {
