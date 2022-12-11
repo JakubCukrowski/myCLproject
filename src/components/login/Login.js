@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom"
 import {useAuth} from "../context/AuthContext";
+import {doc, getDocs, getDoc} from "@firebase/firestore";
+import {db} from "../../firebase/firebase";
+
 
 
 const Login = () => {
@@ -35,12 +38,6 @@ const Login = () => {
             console.log(e.message)
         }
     }
-
-    // useEffect(() => {
-    //     if (user?.uid !== null) {
-    //         navigate(`${user.uid}/dashboard/savevisit`)
-    //     }
-    // }, [user?.uid])
 
     return (
         <section>

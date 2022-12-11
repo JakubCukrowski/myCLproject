@@ -17,6 +17,7 @@ export const AuthContextProvider = ({ children }) => {
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
 
+
     const createAccount = (email, password, name) => {
         return createUserWithEmailAndPassword(auth, email, password)
             .then(async result => {
@@ -43,6 +44,8 @@ export const AuthContextProvider = ({ children }) => {
     const signIn = (email, password) => {
         return signInWithEmailAndPassword(auth, email, password)
     }
+
+
 
     const logout = () => {
         return signOut(auth)

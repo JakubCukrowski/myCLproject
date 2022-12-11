@@ -6,6 +6,7 @@ const MyCalendar = () => {
     const [date, setDate] = useState(new Date())
     const [visit, setVisit] = useState(false)
 
+    const disabled = ({date}) => date.getDay() === 0 || date.getDay() === 6
 
     return (
         <>
@@ -13,6 +14,7 @@ const MyCalendar = () => {
             <div className="calendar-container">
                 <Calendar
                     onChange={setDate}
+                    tileDisabled={disabled}
                     tileClassName={"tile-content"}
                     value={date}
                     locale={"pl-PL"}
