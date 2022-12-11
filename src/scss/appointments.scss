@@ -4,6 +4,10 @@
   border-radius: 12px;
   transition: 0.3s;
 
+  &:disabled {
+    background-color: tomato;
+  }
+
   &:not(.appointment-btn:last-child) {
     margin-right: 20px;
   }
