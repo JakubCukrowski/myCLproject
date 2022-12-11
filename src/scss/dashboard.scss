@@ -1,8 +1,7 @@
 .dashboard {
   max-width: 100%;
   min-height: 100vh;
-  background: rgb(175,103,233);
-  background: linear-gradient(0deg, rgba(175,103,233,1) 20%, rgba(235,214,161,1) 80%);
+  background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
   text-align: center;
   display: flex;
   justify-content: space-between;

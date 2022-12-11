@@ -37,15 +37,17 @@ const Register = () => {
         <form className="register-form">
             <div className="container">
                 <p>Zarejestruj się</p>
-                <label>Imię:
-                    <input name="displayName" value={data.displayName} onChange={handleInputs} type="text"/>
-                </label>
-                <label>Email:
-                    <input name="email" value={data.email} onChange={handleInputs} type="email"/>
-                </label>
-                <label>Hasło:
-                    <input name="password" value={data.password} onChange={handleInputs} type="password"/>
-                </label>
+                <div className={"register-form-wrapper"}>
+                    <label>Imię:
+                        <input name="displayName" value={data.displayName} onChange={handleInputs} type="text"/>
+                    </label>
+                    <label>Email:
+                        <input name="email" value={data.email} onChange={handleInputs} type="email"/>
+                    </label>
+                    <label>Hasło:
+                        <input name="password" value={data.password} onChange={handleInputs} type="password"/>
+                    </label>
+                </div>
                 <button onClick={signUp} className="create-acc-btn">Utwórz konto</button>
             </div>
         </form>

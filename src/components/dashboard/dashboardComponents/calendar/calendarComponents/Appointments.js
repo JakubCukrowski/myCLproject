@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {doc, updateDoc, arrayUnion, collection, onSnapshot, getDocs} from "@firebase/firestore";
+import {doc, updateDoc, arrayUnion, collection, onSnapshot} from "@firebase/firestore";
 import {db} from "../../../../../firebase/firebase";
 import {useAuth} from "../../../../context/AuthContext";
 
@@ -26,24 +26,6 @@ const Appointments = ({date}) => {
     const updateVisit = async (e) => {
         const userDoc = doc(db, "users", user.uid)
         const visitsDoc = doc(db, "visits","OAVsMc63w3nMH4mTnDy9")
-        console.log(visitData.length)
-
-
-        // visitData.forEach(visit => {
-        //
-        //     if (!(e.target.innerText === visit.time && date.toLocaleDateString("pl-PL") === visit.date)) {
-        //         updateDoc(visitsDoc, {scheduledVisits: arrayUnion({
-        //                 date: date.toLocaleDateString("pl-PL"),
-        //                 time: e.target.innerText})})
-        //
-        //         updateDoc(userDoc, {visits: arrayUnion({
-        //                 date: date.toLocaleDateString("pl-PL"),
-        //                 time: e.target.innerText})})
-        //         alert("DUPA")
-        //     } else {
-        //         alert("VISIT ALREADY BOOKED")
-        //     }
-        // })
 
         if (visitData.length === 0) {
             await updateDoc(visitsDoc, {scheduledVisits: arrayUnion({
@@ -64,6 +46,7 @@ const Appointments = ({date}) => {
                     date: date.toLocaleDateString("pl-PL"),
                     time: e.target.innerText})})
             alert("SA WIZYTY W TABELI ALE NIE A E.TARGET")
+
         } else {
             alert("VISIT ALREADY BOOKED")
         }

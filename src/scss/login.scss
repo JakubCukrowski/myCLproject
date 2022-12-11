@@ -1,9 +1,20 @@
 .login-wrapper {
   padding: 80px;
   display: block;
+  background-color: #DFD7FF;
+  color: white;
+  text-align: center;
 
-  input {
+  p {
+    font-size: 1.4rem;
+  }
+
+  input{
     margin-left: 10px;
+    border: none;
+    color: white;
+    background-color: $base-color;
+    border-bottom: 1px solid white;
   }
 
   .container {
@@ -11,11 +22,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 30%;
+    width: 40%;
     padding: 40px;
-    background-color: #b7a66c;
+    background-color: $base-color;
     border-radius: 8px;
-    box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+    box-shadow: 8px 8px 24px 0 rgba(66, 68, 90, 1);
 
     .email-wrapper {
       margin-bottom: 20px;
@@ -38,5 +49,6 @@
     color: whitesmoke;
     border: 1px solid whitesmoke;
     border-radius: 10px;
+    margin-top: 30px;
   }
 }

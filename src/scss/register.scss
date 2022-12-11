@@ -1,18 +1,28 @@
-.return-btn {
-  padding: 20px;
-  background-color: lightskyblue;
-  margin-left: 20px;
-  margin-top: 20px;
-  color: whitesmoke;
-  border-radius: 6px;
-}
-
 .register-form {
   padding: 80px;
+  background-color: #DFD7FF;
+
+  p {
+    color: white;
+    font-size: 1.4rem;
+  }
+
+  .register-form-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    color: white;
+  }
 
   input {
     margin-left: 20px;
     margin-top: 30px;
+    color: white;
+    background-color: $base-color;
+    border: none;
+    border-bottom: 1px solid white;
+
   }
 
   .container {
@@ -20,9 +30,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 30%;
+    width: 40%;
     padding: 40px;
-    background-color: #b7a66c;
+    background-color: $base-color;
     border-radius: 8px;
     box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
   }
@@ -30,7 +40,7 @@
   .create-acc-btn {
     padding: 6px 12px;
     background-color: burlywood;
-    margin-top: 30px;
+    margin-top: 40px;
     margin-bottom: 30px;
     color: whitesmoke;
     border: 1px solid whitesmoke;

@@ -6,7 +6,9 @@ const MyCalendar = () => {
     const [date, setDate] = useState(new Date())
     const [visit, setVisit] = useState(false)
 
-    const disabled = ({date}) => date.getDay() === 0 || date.getDay() === 6
+    const disable = ({date}) => {
+        return date.getDay() === 0 || date.getDay() === 6
+    }
 
     return (
         <>
@@ -14,9 +16,10 @@ const MyCalendar = () => {
             <div className="calendar-container">
                 <Calendar
                     onChange={setDate}
-                    tileDisabled={disabled}
+                    tileDisabled={disable}
                     tileClassName={"tile-content"}
                     value={date}
+                    view={"month"}
                     locale={"pl-PL"}
                     minDate={new Date()}
                     maxDate={new Date("2023-12-31")}
