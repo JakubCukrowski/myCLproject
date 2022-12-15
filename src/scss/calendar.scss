@@ -46,7 +46,7 @@
   background: none;
 }
 .react-calendar__navigation button:disabled {
-  background-color: #4f3635;
+  background-color: #70504e;
 }
 .react-calendar__navigation button:enabled:hover,
 .react-calendar__navigation button:enabled:focus {
@@ -87,7 +87,8 @@
   line-height: 16px;
 }
 .react-calendar__tile:disabled {
-  background-color: #4f3635;
+  background-color: #70504e;
+  color: #70504e;
 
 }
 .react-calendar__tile:enabled:hover,

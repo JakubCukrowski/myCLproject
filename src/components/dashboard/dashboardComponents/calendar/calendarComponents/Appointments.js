@@ -3,7 +3,6 @@ import {doc, updateDoc, arrayUnion, collection, onSnapshot} from "@firebase/fire
 import {db} from "../../../../../firebase/firebase";
 import {useAuth} from "../../../../context/AuthContext";
 import AppointmentBtn from "./AppointmentBtn";
-import appointmentBtn from "./AppointmentBtn";
 
 const times = ['08:00','09:00','10:00','12:00','13:00']
 

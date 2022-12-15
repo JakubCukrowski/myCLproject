@@ -48,7 +48,6 @@ const UserVisits = ()=> {
 
     }
 
-
     const visitCounts = () => {
         if (visits.length === 0) {
             return <h1>Nie masz żadnych wizyt</h1>
@@ -81,7 +80,7 @@ const UserVisits = ()=> {
                         <td>{indx + 1}</td>
                         <td>{visit.time}</td>
                         <td>{visit.date}</td>
-                        <td><button onClick={deleteVisit}>Usuń</button></td>
+                        <td><button onClick={deleteVisit} className={"delete-visit-btn"}>Usuń</button></td>
                     </tr>)}
                 </tbody>
             </Table>
