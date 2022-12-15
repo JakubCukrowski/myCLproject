@@ -7,8 +7,7 @@ const About = () => {
                 <div className="about-wrapper">
                     <div className="text-wrapper">
                         <h2>O nas</h2>
-                        <p>O nas
-                            Zapraszamy do naszego Centrum Psychoterapii i Psychoedukacji w Warszawie,
+                        <p>Zapraszamy do naszego Centrum Psychoterapii i Psychoedukacji w Warszawie,
                             w dzielnicy <strong>Bielany</strong>. Oferujemy wsparcie w zakresie pomocy psychologicznej,
                             psychoterapii krótko i długoterminowej oraz psychoedukacji. Pracujemy w oparciu o różne nurty i
                             podejścia terapeutyczne

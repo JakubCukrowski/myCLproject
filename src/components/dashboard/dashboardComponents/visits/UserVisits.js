@@ -28,8 +28,10 @@ const UserVisits = ()=> {
             return <h1>Nie masz żadnych wizyt</h1>
         } else if (visits.length === 1) {
             return <h1>Masz zaplanowaną {visits.length} wizytę</h1>
-        } else {
+        } else if (visits.length > 1 && visits.length <= 4) {
             return <h1>Masz zaplanowane {visits.length} wizyty</h1>
+        } else {
+            return <h1>Masz zaplanowanych {visits.length} wizyt</h1>
         }
     }
 

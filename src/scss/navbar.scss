@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap');
 @import "colors";
+@import "mixins";
 
 .navbar-section {
   background-color: whitesmoke;
@@ -9,10 +10,11 @@
   z-index: 100;
 
   .navbar-container {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-right: 50px;
+    padding-right: 30px;
 
     .logo-container {
       display: flex;
@@ -23,6 +25,11 @@
         font-size: 20px;
         width: 50%;
         color: $base-color;
+        display: none;
+
+        @include tablet {
+          display: block;
+        }
       }
     }
   }
@@ -31,30 +38,84 @@
     width: 150px;
   }
 
-  ul {
-    display: flex;
-    justify-content: space-around;
+  .desktop {
+    @include tablet {
+      position: relative;
+      display: none;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      height: auto;
+      width: auto;
+      right: 0;
+      gap: 0;
+      background-color: transparent;
+      font-family: 'Libre Baskerville', serif;
+      text-transform: uppercase;
+      font-size: 14px;
+      @include tablet {
+        display: flex;
+      }
+
+      li {
+        border-bottom: 1px solid transparent;
+        margin-right: 20px;
+
+        &:hover {
+          border-bottom: 1px solid #79672b;
+        }
+      }
+    }
+  }
+
+  .mobile {
+    position: absolute;
+    top: 0;
+    right: -300px;
+    display: none;
+    background-color: white;
+    height: 100vh;
+    width: 70%;
+    transition: 0.3s;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
-    width: 40%;
+    gap: 30px;
     font-family: 'Libre Baskerville', serif;
     text-transform: uppercase;
-    font-size: 14px;
+    font-size: 20px;
 
     li {
       border-bottom: 1px solid transparent;
+      margin-right: 20px;
       &:hover {
         border-bottom: 1px solid #79672b;
       }
-    }
+      &:first-child {
+        margin-top: 100px;
 
-    a {
-      text-decoration: none;
-      font-weight: 700;
-      color: $base-color;
-
-      &:hover {
-        color: #79672b;
+        @include tablet {
+          margin-top: 0;
+        }
       }
     }
+
+  }
+  a {
+    text-decoration: none;
+    font-weight: 700;
+    color: $base-color;
+
+    &:hover {
+      color: #79672b;
+    }
+  }
+}
+
+.hamburger-menu {
+  z-index: 100;
+
+  @include tablet {
+    display: none;
   }
 }

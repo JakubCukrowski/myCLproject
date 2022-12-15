@@ -18,7 +18,6 @@ const Appointments = ({date}) => {
         times.forEach(time => {
             if (checkIfVisitIsUnavailable(date.toLocaleDateString("pl-PL"), time)) {
                 tempDisabledTimes.push(time)
-                console.log("dupa")
             }
         })
 

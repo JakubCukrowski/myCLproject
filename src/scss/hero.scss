@@ -1,7 +1,8 @@
+@import "mixins";
+
 .hero {
   background: transparent url("../components/hero/image/pexels-creative-free-stock-971360.jpg") no-repeat center/cover;
   position: relative;
-  //filter: blur(2px);
   width: 100%;
   height: 100vh;
 
@@ -10,26 +11,40 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.5);
   }
 }
 
 .hero-content {
-
   position: absolute;
-  top: 30%;
-  left: 10%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+
+  @include tablet {
+    top: 20%;
+    left: 5%;
+    transform: translate(0, 0);
+    text-align: left;
+  }
 
   h1 {
     color: $base-color;
-    width: 40%;
     font-size: 50px;
+
+    @include tablet {
+      width: 40%;
+    }
   }
 
   p {
     margin-top: 40px;
     color: $base-color;
     font-size: 24px;
-    width: 40%;
+
+    @include tablet {
+      width: 40%;
+    }
   }
 }

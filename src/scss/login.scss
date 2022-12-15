@@ -1,9 +1,15 @@
+@import "mixins";
+
 .login-wrapper {
-  padding: 80px;
+  padding: 80px 10px;
   display: block;
   background-color: #DFD7FF;
   color: white;
   text-align: center;
+
+  @include tablet {
+    padding: 80px;
+  }
 
   p {
     font-size: 1.4rem;
@@ -22,11 +28,15 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 40%;
+    width: 100%;
     padding: 40px;
     background-color: $base-color;
     border-radius: 8px;
     box-shadow: 8px 8px 24px 0 rgba(66, 68, 90, 1);
+
+    @include tablet {
+      width: 40%;
+    }
 
     .email-wrapper {
       margin-bottom: 20px;
