@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from "react";
-import {doc, getDoc} from "@firebase/firestore";
+import {doc, getDoc, updateDoc, arrayRemove} from "@firebase/firestore";
 import {db} from "../../../../firebase/firebase";
 import {useAuth} from "../../../context/AuthContext";
 import Table from 'react-bootstrap/Table';
-import {Button} from "react-bootstrap";
 import Spinner from "react-bootstrap/Spinner";
 
 const UserVisits = ()=> {
@@ -11,17 +10,44 @@ const UserVisits = ()=> {
     const {user} = useAuth()
     const userCollection = doc(db, "users", user.uid)
     const [visits, setVisits] = useState([])
+    const [allVisits, setAllVisits] = useState([])
     const [status, setStatus] = useState(false)
+    const visitsRef = doc(db, 'visits', 'OAVsMc63w3nMH4mTnDy9');
 
     useEffect(() => {
         const getCollection = async () => {
-            const data = await getDoc(userCollection)
-            setVisits(data.data().visits)
+            const userData = await getDoc(userCollection)
+            const visitsData = await getDoc(visitsRef)
+            setVisits(userData.data().visits)
+            setAllVisits(visitsData.data().scheduledVisits)
             setStatus(true)
         }
 
+
         getCollection()
-    }, [])
+    }, [visits])
+
+    const deleteVisit = async (e) => {
+        const date = e.target.parentElement.previousElementSibling.innerText
+        const time = e.target.parentElement.previousElementSibling.previousElementSibling.innerText
+
+        if (allVisits.some(visit => visit.date === date && visit.time === time)) {
+            await updateDoc(visitsRef, {scheduledVisits: arrayRemove({
+                    date: date,
+                    time: time
+                })
+            })
+        }
+
+        if (visits.some(visit => visit.date === date && visit.time === time)) {
+            await updateDoc(userCollection, {visits: arrayRemove({
+                    date: date,
+                    time: time
+                })})
+        }
+
+    }
+
 
     const visitCounts = () => {
         if (visits.length === 0) {
@@ -55,7 +81,7 @@ const UserVisits = ()=> {
                         <td>{indx + 1}</td>
                         <td>{visit.time}</td>
                         <td>{visit.date}</td>
-                        <td><Button variant={"success"}>Usuń</Button></td>
+                        <td><button onClick={deleteVisit}>Usuń</button></td>
                     </tr>)}
                 </tbody>
             </Table>
