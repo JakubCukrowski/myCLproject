@@ -3,6 +3,7 @@ import {doc, updateDoc, arrayUnion, collection, onSnapshot} from "@firebase/fire
 import {db} from "../../../../../firebase/firebase";
 import {useAuth} from "../../../../context/AuthContext";
 import AppointmentBtn from "./AppointmentBtn";
+import appointmentBtn from "./AppointmentBtn";
 
 const times = ['08:00','09:00','10:00','12:00','13:00']
 
@@ -62,7 +63,7 @@ const Appointments = ({date}) => {
             await updateDoc(userDoc, {visits: arrayUnion({
                     date: date.toLocaleDateString("pl-PL"),
                     time: e.target.innerText})})
-            alert(`Wizyta zarezerwowana na ${date} o godzinie ${e.target.innerText}`)
+            alert(`Wizyta zarezerwowana na ${date.toLocaleDateString("pl-PL")} o godzinie ${e.target.innerText}`)
 
         } else {
             alert(`Ta wizyta jest już zajęta`)
@@ -71,7 +72,7 @@ const Appointments = ({date}) => {
 
     return (
 
-        <div>
+        <div className={"appointment_btn_container"}>
             {times.map((time, indx) => {
                 return (
                     <AppointmentBtn disabled={disabledTimes.includes(time)} onClick={updateVisit} key={indx} title={time}/>

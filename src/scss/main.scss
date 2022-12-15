@@ -10,3 +10,10 @@
 @import "calendar.scss";
 @import "appointments.scss";
 
+#root {
+  min-height: 100vh;
+}
+
+body {
+  min-height: 100vh;
+}

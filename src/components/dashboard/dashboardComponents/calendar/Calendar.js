@@ -12,8 +12,8 @@ const MyCalendar = () => {
 
     return (
         <>
-            <h2 className="header">Zaplanuj wizytę</h2>
             <div className="calendar-container">
+                <h2 className="header">Zaplanuj wizytę</h2>
                 <Calendar
                     onChange={setDate}
                     tileDisabled={disable}
