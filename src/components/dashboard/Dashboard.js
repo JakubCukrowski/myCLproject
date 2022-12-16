@@ -3,7 +3,9 @@ import {Outlet} from "react-router-dom";
 import {Link, useNavigate} from "react-router-dom";
 import {
     faCalendarCheck,
-    faCalendarPlus, faCircleArrowLeft, faCircleXmark,
+    faCalendarPlus,
+    faCircleArrowRight,
+    faCircleXmark,
     faGear,
     faHouse,
     faPowerOff
@@ -81,8 +83,8 @@ const Dashboard = () => {
             </nav>
             <FontAwesomeIcon onClick={showDashboardMenu}
                              className="menu-button"
-                             icon={display === "none" ? faCircleArrowLeft : faCircleXmark}
-                             fontSize={40}/>
+                             icon={display === "none" ? faCircleArrowRight : faCircleXmark}
+                             fontSize={30}/>
         </section>
     )
 }

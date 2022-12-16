@@ -62,9 +62,6 @@ const Appointments = ({date}) => {
                     date: date.toLocaleDateString("pl-PL"),
                     time: e.target.innerText})})
             alert(`Wizyta zarezerwowana na ${date.toLocaleDateString("pl-PL")} o godzinie ${e.target.innerText}`)
-
-        } else {
-            alert(`Ta wizyta jest już zajęta`)
         }
     }
 
