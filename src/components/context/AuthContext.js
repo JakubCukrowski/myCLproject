@@ -26,13 +26,12 @@ export const AuthContextProvider = ({ children }) => {
                     displayName: name})
                 const docRef = await setDoc(ref, {name: name, email: email, visits: ""})
             })
-            .catch(err => console.log(err))
+
     }
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser)
-            if (currentUser) navigate(`/dashboard/savevisit`)
             if (!currentUser) navigate("/")
             setLoading(false)
         })

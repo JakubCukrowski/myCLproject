@@ -4,7 +4,7 @@
   padding: 80px 10px;
   background-color: #DFD7FF;
   @include tablet {
-    padding: 80px;
+    padding: 100px;
   }
 
   p {
@@ -16,17 +16,27 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-end;
     color: white;
+    width: 80%;
+    font-size: 20px;
+
+    @include tablet {
+      width: 60%;
+      font-size: 18px;
+    }
   }
 
   input {
-    margin-left: 20px;
-    margin-top: 30px;
-    color: white;
+    color: #eeeaea;
     background-color: $base-color;
     border: none;
+    border-radius: 0;
     border-bottom: 1px solid white;
+    -webkit-appearance: none;
+
+    &:not(:last-child) {
+      margin-bottom: 20px;
+    }
 
   }
 
@@ -42,7 +52,7 @@
     box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
 
     @include tablet {
-      width: 40%;
+      width: 60%;
     }
   }
 

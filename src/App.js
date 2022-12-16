@@ -36,7 +36,10 @@ const App = () => {
                         <ProtectedRouteToLogin>
                             <Login/>
                         </ProtectedRouteToLogin>} />
-                    <Route path="register" element={<Register/>} />
+                    <Route path="register" element={
+                        <ProtectedRouteToLogin>
+                            <Register/>
+                        </ProtectedRouteToLogin>} />
                 </Route>
                 <Route path="/dashboard" element={
                     <ProtectedRouteToDashboard>

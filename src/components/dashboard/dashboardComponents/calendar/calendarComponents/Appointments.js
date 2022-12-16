@@ -42,7 +42,6 @@ const Appointments = ({date}) => {
     const updateVisit = async (e) => {
         const userDoc = doc(db, "users", user.uid)
         const visitsDoc = doc(db, "visits","OAVsMc63w3nMH4mTnDy9")
-        console.log(date.toLocaleDateString("pl-PL"), e.target.innerText)
 
         if (visitData.length === 0) {
             await updateDoc(visitsDoc, {scheduledVisits: arrayUnion({

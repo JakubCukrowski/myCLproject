@@ -27,25 +27,17 @@ const UserVisits = ()=> {
         getCollection()
     }, [visits])
 
-    const deleteVisit = async (e) => {
-        const date = e.target.parentElement.previousElementSibling.innerText
-        const time = e.target.parentElement.previousElementSibling.previousElementSibling.innerText
+    const deleteVisit = async (date, time) => {
+        await updateDoc(visitsRef, {scheduledVisits: arrayRemove({
+            date: date,
+            time: time
+        })
+        })
 
-        if (allVisits.some(visit => visit.date === date && visit.time === time)) {
-            await updateDoc(visitsRef, {scheduledVisits: arrayRemove({
-                    date: date,
-                    time: time
-                })
-            })
-        }
-
-        if (visits.some(visit => visit.date === date && visit.time === time)) {
-            await updateDoc(userCollection, {visits: arrayRemove({
-                    date: date,
-                    time: time
-                })})
-        }
-
+        await updateDoc(userCollection, {visits: arrayRemove({
+            date: date,
+            time: time
+        })})
     }
 
     const visitCounts = () => {
@@ -80,7 +72,7 @@ const UserVisits = ()=> {
                         <td>{indx + 1}</td>
                         <td>{visit.time}</td>
                         <td>{visit.date}</td>
-                        <td><button onClick={deleteVisit} className={"delete-visit-btn"}>Usuń</button></td>
+                        <td><button onClick={() => deleteVisit(visit.date, visit.time)} className={"delete-visit-btn"}>Usuń</button></td>
                     </tr>)}
                 </tbody>
             </Table>
