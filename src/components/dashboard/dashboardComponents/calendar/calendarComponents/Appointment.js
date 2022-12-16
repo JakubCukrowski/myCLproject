@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import Appointments from "./Appointments";
 
 const Appointment = ({visitDate, date}) => {

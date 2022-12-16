@@ -44,7 +44,9 @@ const Dashboard = () => {
     return (
         <section className="dashboard">
             <div className="dashboard-content-wrapper">
-                <Outlet/>
+                <div className="container">
+                    <Outlet/>
+                </div>
             </div>
             <nav style={{display}}>
                 <div className="container">

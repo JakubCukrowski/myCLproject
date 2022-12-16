@@ -60,6 +60,11 @@ const Navbar = () => {
             right: prevState.right === -300 ? 0 : -300
         }))
         setIsOpen(prevState => !prevState)
+        if (isOpen === false) {
+            document.querySelector("body").style.overflow = "hidden"
+        } else {
+            document.querySelector("body").style.overflow = "auto"
+        }
     }
 
     return (

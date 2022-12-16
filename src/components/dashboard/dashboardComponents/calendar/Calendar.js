@@ -26,7 +26,7 @@ const MyCalendar = () => {
                     onClickDay={() => setVisit(true)}/>
             </div>
             <div>
-                <p>Dostępne wizyty w dniu {date.toLocaleDateString("pl-PL")}</p>
+                <p>{visit ? `Dostępne wizyty w dniu ${date.toLocaleDateString("pl-PL")}` : null}</p>
                 <Appointment visitDate={visit} date={date}/>
             </div>
         </>

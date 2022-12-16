@@ -53,7 +53,7 @@ const UserVisits = ()=> {
     }
 
     return (
-        <div>
+        <>
 
             {status === false ? <Spinner/> : visitCounts()}
             {visits.length > 0
@@ -77,7 +77,7 @@ const UserVisits = ()=> {
                 </tbody>
             </Table>
                 : null}
-        </div>
+        </>
     )
 }
 
