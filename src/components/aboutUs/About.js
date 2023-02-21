@@ -20,7 +20,7 @@ const About = () => {
                             (całościowego) podejścia do danej osoby.</p>
                     </div>
                     <div className="image-wrapper">
-                        <img src={require("./image/pexels-marek-piwnicki-14332696.jpg")} alt=""/>
+                        {/* <img src={require("./image/pexels-marek-piwnicki-14332696.jpg")} alt=""/> */}
                     </div>
                 </div>
             </div>
