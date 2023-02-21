@@ -2,7 +2,7 @@
 
 .register-form {
   padding: 80px 10px;
-  background-color: #DFD7FF;
+  background-color: $bg-color;
   @include tablet {
     padding: 100px;
   }
@@ -21,7 +21,7 @@
     font-size: 20px;
 
     @include tablet {
-      width: 60%;
+      width: 50%;
       font-size: 18px;
     }
   }

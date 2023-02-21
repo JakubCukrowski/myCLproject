@@ -52,12 +52,12 @@ const Login = () => {
                     <div style={{color: "darkred", fontWeight: "bold", fontSize: 18, marginBottom: 10}}>{error}</div>
                     <p>Aby sprawdzić swoje wizyty, zaloguj się</p>
                     <div className="email-wrapper">
-                        <label>Email:
+                        <label>Email
                             <input name="email" value={data.email} type="email" onChange={onInputsChange}/>
                         </label>
                     </div>
                     <div className="pass-wrapper">
-                        <label>Hasło:
+                        <label>Hasło
                             <input name="password" value={data.password} type="password" onChange={onInputsChange}/>
                         </label>
                     </div>

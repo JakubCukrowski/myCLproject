@@ -3,7 +3,7 @@
 .login-wrapper {
   padding: 80px 10px;
   display: block;
-  background-color: #DFD7FF;
+  background-color: $bg-color;
   color: white;
   text-align: center;
 
@@ -37,7 +37,7 @@
     box-shadow: 8px 8px 24px 0 rgba(66, 68, 90, 1);
 
     @include tablet {
-      width: 60%;
+      width: 50%;
     }
 
     label {
