@@ -78,14 +78,14 @@ const Navbar = () => {
                         <p>Pracownia psychologiczna</p>
                     </div>
                     <div className={"hamburger-menu"}>
-                        <FontAwesomeIcon icon={isOpen ? faXmark : faBars} fontSize={40} onClick={showHamMenu}/>
+                        <FontAwesomeIcon icon={isOpen ? faXmark : faBars} className={"X_bars"} fontSize={40} onClick={showHamMenu}/>
                     </div>
                     <ul className={isMobile ? "mobile" : "desktop"} style={isMobile ? hamburgerStyles : null}>
-                        <li onClick={showHamMenu}><Link to="/offer">Oferta</Link></li>
-                        <li onClick={showHamMenu}><Link to="/contact">Kontakt</Link></li>
-                        <li onClick={showHamMenu}><Link to="/prices">Cennik</Link></li>
-                        <li onClick={showHamMenu}><Link to="/gallery">Galeria</Link></li>
-                        <li onClick={showHamMenu}>
+                        <li onClick={isOpen ? showHamMenu : null}><Link to="/offer">Oferta</Link></li>
+                        <li onClick={isOpen ? showHamMenu : null}><Link to="/contact">Kontakt</Link></li>
+                        <li onClick={isOpen ? showHamMenu : null}><Link to="/prices">Cennik</Link></li>
+                        <li onClick={isOpen ? showHamMenu : null}><Link to="/gallery">Galeria</Link></li>
+                        <li onClick={isOpen ? showHamMenu : null}>
                             {loggingIn
                                 ? <Link to="login">Zaloguj</Link>
                                 : <Link to="dashboard/savevisit">Witaj, {user.displayName}</Link>}

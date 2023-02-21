@@ -52,7 +52,7 @@
       background-color: transparent;
       font-family: 'Libre Baskerville', serif;
       text-transform: uppercase;
-      font-size: 14px;
+      font-size: 18px;
       @include tablet {
         display: flex;
       }
@@ -107,13 +107,17 @@
     color: $base-color;
 
     &:hover {
-      color: #79672b;
+      color: $on-hover-color;
     }
   }
 }
 
 .hamburger-menu {
   z-index: 100;
+
+  .X_bars {
+    color: $base-color;
+  }
 
   @include tablet {
     display: none;
