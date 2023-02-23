@@ -1,46 +1,54 @@
 @import "mixins";
 
 .hero {
-  background: transparent url("../components/hero/image/pexels-creative-free-stock-971360.jpg") no-repeat center/cover;
+  background: transparent url("../components/hero/image/pexels-javon-swaby-1697912.jpg") no-repeat center/cover;
   position: relative;
   width: 100%;
   height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @include tablet {
+    background-attachment: fixed;
+  }
 
   &:before {
     content: "";
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(2px);
   }
 }
 
 .hero-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+  position: relative;
+  z-index: 50;
+  padding: 0 10px;
 
   @include tablet {
-    top: 20%;
-    left: 5%;
-    transform: translate(0, 0);
-    text-align: left;
+  
   }
 
   h1 {
-    color: $base-color;
-    font-size: 50px;
+    font-size: 40px;
 
     @include tablet {
       width: 40%;
+      font-size: 60px;
     }
   }
 
   p {
     margin-top: 40px;
-    color: $base-color;
     font-size: 24px;
 
     @include tablet {
