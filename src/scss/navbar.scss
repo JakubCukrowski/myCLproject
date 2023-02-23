@@ -4,10 +4,14 @@
 
 .navbar-section {
   background-color: whitesmoke;
-  position: sticky;
+  position: fixed;
   top: 0;
   width: 100%;
   z-index: 100;
+
+  @include tablet {
+    background-color: transparent;
+  }
 
   .navbar-container {
     position: relative;
@@ -24,8 +28,8 @@
       p {
         font-size: 20px;
         width: 50%;
-        color: $base-color;
         display: none;
+        color: $text-color;
 
         @include tablet {
           display: block;
@@ -52,7 +56,7 @@
       background-color: transparent;
       font-family: 'Libre Baskerville', serif;
       text-transform: uppercase;
-      font-size: 18px;
+      font-size: 16px;
       @include tablet {
         display: flex;
       }
@@ -103,8 +107,8 @@
   }
   a {
     text-decoration: none;
-    font-weight: 700;
-    color: $base-color;
+    font-weight: 500;
+    color: $text-color;
 
     &:hover {
       color: $on-hover-color;
