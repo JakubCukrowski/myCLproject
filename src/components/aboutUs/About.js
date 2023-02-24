@@ -19,9 +19,7 @@ const About = () => {
                             zespołów diagnostycznych, które dają możliwość holistycznego
                             (całościowego) podejścia do danej osoby.</p>
                     </div>
-                    <div className="image-wrapper">
-                        {/* <img src={require("./image/pexels-marek-piwnicki-14332696.jpg")} alt=""/> */}
-                    </div>
+                    <div className="image-wrapper"></div>
                 </div>
             </div>
         </section>
