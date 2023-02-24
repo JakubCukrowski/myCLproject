@@ -3,13 +3,14 @@
 @import "mixins";
 
 .navbar-section {
-  background-color: whitesmoke;
+  background-color: rgb(130 129 101 / 90%);
   position: fixed;
   padding: 10px 0;
   top: 0;
   width: 100%;
   z-index: 100;
-  transition: 0.2s ease-in;
+  transition: 0.25s ease-in;
+  border-bottom-left-radius: 23%;
 
   @include tablet {
     background-color: transparent;
@@ -22,6 +23,10 @@
     align-items: center;
     padding-right: 30px;
 
+    a {
+      text-decoration: none;
+    }
+
     .logo-container {
       display: flex;
       justify-content: space-around;
@@ -32,6 +37,7 @@
         width: 50%;
         display: none;
         color: white;
+        margin-bottom: 0;
 
         @include tablet {
           display: block;
@@ -137,7 +143,7 @@
 }
 
 .scrolled {
-  background-color: rgba(252, 252, 252, 0.9);
+  background-color: rgb(130 129 101 / 90%);
   backdrop-filter: blur(6px);
 }
 

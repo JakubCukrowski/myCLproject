@@ -65,21 +65,15 @@ const Navbar = () => {
         if (pathname !== "/"){
             setIsscrolled(true)
             nav.classList.add("scrolled")
-            links.forEach(link => link.classList.add("link-color"))
-            logoText.classList.add("link-color")
             
         } else {
             nav.classList.remove("scrolled")
-            links.forEach(link => link.classList.remove("link-color"))
-            logoText.classList.remove("link-color")
         }
 
         const changeColor = () => {
             if (window.scrollY >= navbarTreshold && pathname === "/") {
                 setIsscrolled(true)
                 nav.classList.add("scrolled")
-                links.forEach(link => link.classList.add("link-color"))
-                logoText.classList.add("link-color")
     
             } else if (window.scrollY < navbarTreshold && pathname === "/"){
                 setIsscrolled(false)
@@ -110,12 +104,12 @@ const Navbar = () => {
         <>
             <section className="navbar-section" style={{position: pathname === "/" ? "fixed" : "sticky", }}>
                 <div className="navbar-container">
+                <Link to="/">
                     <div className="logo-container">
-                        <Link to="/">
-                            <FontAwesomeIcon icon={faFaceGrinHearts} fontSize={80} color={isScrolled ? "#9d9a9a" : "white"}/>
-                        </Link>
+                        <FontAwesomeIcon icon={faFaceGrinHearts} fontSize={80} color={"white"} style={{paddingLeft: 10}}/>
                         <p>Pracownia psychologiczna</p>
                     </div>
+                    </Link>
                     <div className={"hamburger-menu"}>
                         <FontAwesomeIcon icon={isOpen ? faXmark : faBars} className={"X_bars"} fontSize={40} onClick={showHamMenu}/>
                     </div>
