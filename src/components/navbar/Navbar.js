@@ -108,7 +108,7 @@ const Navbar = () => {
 
     return (
         <>
-            <section className="navbar-section" style={{position: pathname === "/" ? "fixed" : "sticky"}}>
+            <section className="navbar-section" style={{position: pathname === "/" ? "fixed" : "sticky", }}>
                 <div className="navbar-container">
                     <div className="logo-container">
                         <Link to="/">
