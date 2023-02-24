@@ -1,18 +1,20 @@
-import {Link, Outlet} from "react-router-dom";
+import {Link, Outlet, useLocation} from "react-router-dom";
 import '../../scss/navbar.scss'
 import Footer from "../footer/Footer";
 import {useAuth} from "../context/AuthContext";
 import {useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBars, faXmark} from "@fortawesome/free-solid-svg-icons";
+import {faBars, faXmark, faFaceGrinHearts} from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
     const {user} = useAuth()
+    const {pathname} = useLocation()
     const [loggingIn, setLoggingIn] = useState(true)
     const mediaQuery = "(max-width: 900px)";
     const mediaQueryMatch = window.matchMedia(mediaQuery);
     const [isMobile, setIsMobile] = useState(false);
     const [isOpen, setIsOpen] = useState(false)
+    const [isScrolled, setIsscrolled] = useState(false)
 
     const [hamburgerStyles, setHamburgerStyles] = useState({
         display: "none",
@@ -54,6 +56,43 @@ const Navbar = () => {
         }
     }, [])
 
+    useEffect(() => {
+        const navbarTreshold = 30
+        const nav = document.querySelector(".navbar-section")
+        const links = document.querySelectorAll(".desktop a")
+        const logoText = document.querySelector(".logo-container p")
+
+        if (pathname !== "/"){
+            setIsscrolled(true)
+            nav.classList.add("scrolled")
+            links.forEach(link => link.classList.add("link-color"))
+            logoText.classList.add("link-color")
+            
+        } else {
+            nav.classList.remove("scrolled")
+            links.forEach(link => link.classList.remove("link-color"))
+            logoText.classList.remove("link-color")
+        }
+
+        const changeColor = () => {
+            if (window.scrollY >= navbarTreshold && pathname === "/") {
+                setIsscrolled(true)
+                nav.classList.add("scrolled")
+                links.forEach(link => link.classList.add("link-color"))
+                logoText.classList.add("link-color")
+    
+            } else if (window.scrollY < navbarTreshold && pathname === "/"){
+                setIsscrolled(false)
+                nav.classList.remove("scrolled")
+                links.forEach(link => link.classList.remove("link-color"))
+                logoText.classList.remove("link-color")
+            }
+        }
+        
+        window.addEventListener("scroll", changeColor)
+        return () => window.removeEventListener("scroll", changeColor);
+    }, [pathname, isScrolled])
+
     const showHamMenu = () => {
         setHamburgerStyles(prevState => ({
             display: prevState.display === "none" ? "flex" : "none",
@@ -69,11 +108,11 @@ const Navbar = () => {
 
     return (
         <>
-            <section className="navbar-section">
+            <section className="navbar-section" style={{position: pathname === "/" ? "fixed" : "sticky"}}>
                 <div className="navbar-container">
                     <div className="logo-container">
                         <Link to="/">
-                            <img src={require('./logo_img/psychologia.png')} alt="logo"/>
+                            <FontAwesomeIcon icon={faFaceGrinHearts} fontSize={80} color={isScrolled ? "#9d9a9a" : "white"}/>
                         </Link>
                         <p>Pracownia psychologiczna</p>
                     </div>
