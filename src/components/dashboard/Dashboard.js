@@ -23,7 +23,7 @@ const Dashboard = () => {
     useEffect(() => {
         const timeout = setTimeout(() => {
             setStatus(true)
-        }, 500)
+        }, 200)
 
         return () => timeout
     }, [])

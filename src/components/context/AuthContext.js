@@ -8,7 +8,7 @@ import {
 } from "firebase/auth";
 import {auth, db} from "../../firebase/firebase";
 import {useNavigate} from "react-router-dom";
-import {setDoc, doc} from "@firebase/firestore";
+import {setDoc, doc, getDocs, collection} from "@firebase/firestore";
 
 const AuthContext = createContext(null)
 
@@ -16,7 +16,8 @@ export const AuthContextProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
-
+    const usersRef = collection(db, "users")
+    const [users, setUsers] = useState([])
 
     const createAccount = (email, password, name) => {
         return createUserWithEmailAndPassword(auth, email, password)
@@ -28,6 +29,16 @@ export const AuthContextProvider = ({ children }) => {
             })
 
     }
+
+    useEffect(() => {
+        const getUsers = async () => {
+            const data = await getDocs(usersRef)
+            const filteredData = data.docs.map(doc => ({...doc.data(), id: doc.id}))
+            setUsers(filteredData)
+        }
+
+        getUsers();
+    }, [])
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -51,7 +62,7 @@ export const AuthContextProvider = ({ children }) => {
     }
 
  return (
-     <AuthContext.Provider value={{createAccount, user, signIn, logout}}>
+     <AuthContext.Provider value={{createAccount, user, signIn, logout, users}}>
          {!loading && children}
      </AuthContext.Provider>
 
