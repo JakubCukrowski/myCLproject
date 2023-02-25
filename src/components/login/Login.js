@@ -44,10 +44,21 @@ const Login = () => {
         try {
             await signIn(data.email, data.password)
         } catch (e) {
-            if (!userEmails.includes(data.email) || data.password.length < 6) {
-                setErrors({
-                    email: true,
-                    password: true
+            if (!userEmails.includes(data.email)) {
+                setErrors(prev => {
+                    return {
+                        ...prev,
+                        email: true
+                    }
+                })
+            }
+
+            if (data.password.length < 6) {
+                setErrors(prevState => {
+                    return {
+                        ...prevState,
+                        password: true
+                    }
                 })
             }
         }
@@ -61,13 +72,13 @@ const Login = () => {
                     <p>Aby sprawdzić swoje wizyty, zaloguj się</p>
                     <div className="email-wrapper">
                         <label>Email
-                            <input className={errors.email && !userEmails.includes(data.email) ? "error" : null} 
+                            <input className={errors.email ? "error" : null} 
                             name="email" 
                             value={data.email} 
                             type="email" 
                             onChange={onInputsChange}/>
                         </label>
-                        {errors.email && !userEmails.includes(data.email) 
+                        {errors.email  
                         ? <span style={{display: "block", color: "tomato", fontSize: 12}}>
                             Podany email nie istnieje
                             </span> 
@@ -75,13 +86,13 @@ const Login = () => {
                     </div>
                     <div className="pass-wrapper">
                         <label>Hasło
-                            <input className={errors.password && data.password.length < 6 ? "error" : null} 
+                            <input className={errors.password ? "error" : null} 
                             name="password" 
                             value={data.password} 
                             type="password" 
                             onChange={onInputsChange}/>
                         </label>
-                        {errors.password && data.password.length < 6 
+                        {errors.password  
                         ? <span style={{display: "block", color: "tomato", fontSize: 12}}>Hasło musi mieć 6 lub więcej znaków</span>
                          : null}
                     </div>
