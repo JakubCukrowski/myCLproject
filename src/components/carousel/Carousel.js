@@ -6,15 +6,12 @@ function UncontrolledExample() {
             <Carousel.Item>
                 <img
                     className="d-block w-100"
-                    src={require("./images/pexels-cottonbro-studio-4101143.jpg")}
+                    src={require("./images/pexels-cottonbro-studio-4098185.jpg")}
                     alt="First slide"
                 />
-                <Carousel.Caption style={{
-                    bottom: "10%",
-                    left: "-40%"
-                }}>
-                    <h3>First slide label</h3>
-                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                <Carousel.Caption>
+                    <h3>Psychologia rozwojowa</h3>
+                    <p>Koncentruje się na człowieku oraz na tym, jak zmienia się na przestrzeni życia.</p>
                     <button className="btn">Dowiedz się więcej</button>
                 </Carousel.Caption>
             </Carousel.Item>
@@ -26,8 +23,11 @@ function UncontrolledExample() {
                 />
 
                 <Carousel.Caption>
-                    <h3>Second slide label</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <h3>Psychologia społeczna</h3>
+                    <p>
+                        Trudni się badaniem wpływu uczestnictwa w grupie oraz związków z innymi ludźmi na zachowanie,
+                        postawy i przekonania jednostki.
+                        </p>
                     <button className="btn">Dowiedz się więcej</button>
                 </Carousel.Caption>
             </Carousel.Item>
@@ -39,9 +39,10 @@ function UncontrolledExample() {
                 />
 
                 <Carousel.Caption>
-                    <h3>Third slide label</h3>
+                    <h3>Psychologia dziecięca</h3>
                     <p>
-                        Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+                    Konsultacja zaburzeń psychicznych takich jak: 
+                    lęki, smutek dziecka, nadruchliwość, agresja, nieposłuszeństwo, problemy wychowawcze.
                     </p>
                     <button className="btn">Dowiedz się więcej</button>
                 </Carousel.Caption>

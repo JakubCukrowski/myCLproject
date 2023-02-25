@@ -20,7 +20,7 @@
       color: $base-color;
 
       &:hover {
-        color: #79672b;
+        color: $on-hover-color;
       }
 
       &:nth-child(2) {

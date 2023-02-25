@@ -29,15 +29,26 @@
 
     .logo-container {
       display: flex;
-      justify-content: space-around;
+      justify-content: center;
       align-items: center;
+      gap: 5px;
+
+      svg {
+        transition: 0.5s ease-in-out;
+      }
+
+      @include tablet {
+        &:hover svg {
+          color: red;
+        }
+      }
 
       p {
         font-size: 20px;
         width: 50%;
         display: none;
         color: white;
-        margin-bottom: 0;
+        margin-bottom: 0 !important;
 
         @include tablet {
           display: block;
@@ -73,21 +84,21 @@
         text-decoration: none;
         font-weight: 100;
         color: white;
+        padding: 6px;
+        transition: 0.3s ease;
+        border-bottom: 0.75px solid transparent;
     
         &:hover {
           color: $on-hover-color;
+          border-bottom: 0.75px solid $on-hover-color;
         }
-      }
-
-      &:hover {
-        border-bottom: 1px solid #79672b;
       }
     }
   }
 
   .mobile {
     position: absolute;
-    top: 0;
+    top: -10px;
     right: -300px;
     display: none;
     background-color: white;
@@ -105,9 +116,6 @@
     li {
       border-bottom: 1px solid transparent;
       margin-right: 20px;
-      &:hover {
-        border-bottom: 1px solid #79672b;
-      }
 
       a {
         text-decoration: none;
@@ -134,7 +142,7 @@
   z-index: 100;
 
   .X_bars {
-    color: $base-color;
+    color: black;
   }
 
   @include tablet {
@@ -143,10 +151,6 @@
 }
 
 .scrolled {
-  background-color: rgb(130 129 101 / 90%);
-  backdrop-filter: blur(6px);
-}
-
-.link-color {
-  color: $text-color !important;
+  background-color: $base-color;
+  backdrop-filter: blur(10px);
 }

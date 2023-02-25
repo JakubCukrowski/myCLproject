@@ -4,7 +4,7 @@ import Footer from "../footer/Footer";
 import {useAuth} from "../context/AuthContext";
 import {useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBars, faXmark, faFaceGrinHearts} from "@fortawesome/free-solid-svg-icons";
+import {faBars, faXmark, faHeart} from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
     const {user} = useAuth()
@@ -57,10 +57,8 @@ const Navbar = () => {
     }, [])
 
     useEffect(() => {
-        const navbarTreshold = 30
+        const navbarTreshold = 80
         const nav = document.querySelector(".navbar-section")
-        const links = document.querySelectorAll(".desktop a")
-        const logoText = document.querySelector(".logo-container p")
 
         if (pathname !== "/"){
             setIsscrolled(true)
@@ -78,8 +76,7 @@ const Navbar = () => {
             } else if (window.scrollY < navbarTreshold && pathname === "/"){
                 setIsscrolled(false)
                 nav.classList.remove("scrolled")
-                links.forEach(link => link.classList.remove("link-color"))
-                logoText.classList.remove("link-color")
+                
             }
         }
         
@@ -106,10 +103,10 @@ const Navbar = () => {
                 <div className="navbar-container">
                 <Link to="/">
                     <div className="logo-container">
-                        <FontAwesomeIcon icon={faFaceGrinHearts} fontSize={80} color={"white"} style={{paddingLeft: 10}}/>
+                        <FontAwesomeIcon icon={faHeart} fontSize={80} color={"white"} style={{paddingLeft: 10}}/>
                         <p>Pracownia psychologiczna</p>
                     </div>
-                    </Link>
+                </Link>
                     <div className={"hamburger-menu"}>
                         <FontAwesomeIcon icon={isOpen ? faXmark : faBars} className={"X_bars"} fontSize={40} onClick={showHamMenu}/>
                     </div>
