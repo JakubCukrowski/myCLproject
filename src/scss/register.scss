@@ -13,31 +13,35 @@
   }
 
   .register-form-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    gap: 20px;
     color: white;
-    width: 80%;
+    width: 50%;
     font-size: 20px;
+    text-align: center;
 
-    @include tablet {
-      width: 50%;
-      font-size: 18px;
-    }
-  }
-
-  input {
-    color: #eeeaea;
-    background-color: $base-color;
-    border: none;
-    border-radius: 0;
-    border-bottom: 1px solid white;
-    -webkit-appearance: none;
-
-    &:not(:last-child) {
-      margin-bottom: 20px;
+    .input-field {
+      margin-bottom: 30px;
+      gap: 40px;
+      font-size: 16px;
     }
 
+    input {
+      background-color: $base-color;
+      color: white;
+      border: none;
+      border-bottom: 1px solid white;
+      display: block;
+      width: 100%;
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+
+    input:-webkit-autofill {
+      -webkit-text-fill-color: white;
+      -webkit-box-shadow: 0 0 0px 1000px $bg-color, 1 inset;
+      transition: background-color 5000s ease-in-out 0s;
+  
+    }
   }
 
   .container {
@@ -59,8 +63,8 @@
   .create-acc-btn {
     padding: 6px 12px;
     background-color: burlywood;
-    margin-top: 40px;
-    margin-bottom: 30px;
+    margin-top: 20px;
+    margin-bottom: 10px;
     color: whitesmoke;
     border: 1px solid whitesmoke;
     border-radius: 10px;
@@ -69,5 +73,13 @@
 
 .btns-wrapper {
   display: flex;
-  gap: 40px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column-reverse;
+  gap: 10px;
+
+  @include tablet {
+    flex-direction: row;
+    gap: 40px;
+  }
 }
