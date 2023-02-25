@@ -8,58 +8,82 @@ const Login = () => {
         password: ""
     } )
     const navigate = useNavigate()
-    const [error, setError] = useState([])
+    const [errors, setErrors] = useState({
+        email: false,
+        password: false
+    })
     const {signIn} = useAuth()
+    const {users} = useAuth()
+    const userEmails = users.map(user => user.email)
 
     const handleRegister = (e) => {
         e.preventDefault()
         navigate("/register")
     }
 
-    const validate = () => {
-        const errors = []
-        if (data.email.length <= 2) errors.push("Email musi być dłuższy niż 2 znaki")
-        if (data.password.length < 6) errors.push("Hasło musi mieć minimum 6 znaków")
-        setError(errors.join(" oraz "))
-        return errors.length <= 0
-    }
-
     const onInputsChange = (e) => {
         const { name, value } = e.target;
+        console.log(name, value);
         setData((prevState) => {
             return {
                 ...prevState,
                 [name]: value,
             };
         });
-        setError("")
+        setErrors(prev => {
+            return {
+                ...prev,
+                [name]: false
+            }
+        })
     };
+
 
     const handleLogin = async (e) => {
         e.preventDefault()
         try {
             await signIn(data.email, data.password)
         } catch (e) {
-            console.log(e.message)
-            validate()
+            if (!userEmails.includes(data.email) || data.password.length < 6) {
+                setErrors({
+                    email: true,
+                    password: true
+                })
+            }
         }
+        
     }
 
     return (
         <section>
             <form className="login-wrapper">
                 <div className="container">
-                    <div style={{color: "darkred", fontWeight: "bold", fontSize: 18, marginBottom: 10}}>{error}</div>
                     <p>Aby sprawdzić swoje wizyty, zaloguj się</p>
                     <div className="email-wrapper">
                         <label>Email
-                            <input name="email" value={data.email} type="email" onChange={onInputsChange}/>
+                            <input className={errors.email && !userEmails.includes(data.email) ? "error" : null} 
+                            name="email" 
+                            value={data.email} 
+                            type="email" 
+                            onChange={onInputsChange}/>
                         </label>
+                        {errors.email && !userEmails.includes(data.email) 
+                        ? <span style={{display: "block", color: "tomato", fontSize: 12}}>
+                            Podany email nie istnieje
+                            </span> 
+                        : null}
                     </div>
                     <div className="pass-wrapper">
                         <label>Hasło
-                            <input name="password" value={data.password} type="password" onChange={onInputsChange}/>
+                            <input className={errors.password && data.password.length < 6 ? "error" : null} 
+                            name="password" 
+                            value={data.password} 
+                            type="password" 
+                            onChange={onInputsChange}/>
                         </label>
+                        {errors.password && data.password.length < 6 
+                        ? <span style={{display: "block", color: "tomato", fontSize: 12}}>Hasło musi mieć 6 lub więcej znaków</span>
+                         : null}
                     </div>
                     <button onClick={handleLogin} className="login-btn">Zaloguj</button>
                     <p>Lub jeśli nie masz konta</p>

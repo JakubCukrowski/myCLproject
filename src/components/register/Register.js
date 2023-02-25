@@ -11,7 +11,7 @@ const Register = () => {
     })
     const navigate = useNavigate()
     const {createAccount} = useAuth()
-    const [error, setError] = useState("")
+    const [error, setError] = useState(false)
 
 
     const handleInputs = (e) => {
@@ -22,29 +22,20 @@ const Register = () => {
                 [name]: value,
             };
         });
-        setError("")
-    }
-
-    const validate = () => {
-        const errors = []
-        if (data.displayName.length <= 2) errors.push("Imię za krótkie")
-        if (data.password < 6) errors.push("Hasło musi mieć przynajmniej 6 znaków")
-        if (data.password !== data.repeatedPassword) errors.push("Hasła nie zgadzają się")
-        setError(errors.join(" oraz "))
-        return errors.length <= 0
+        setError(false)
     }
 
     const signUp = async (e) => {
         e.preventDefault()
         try {
-            if (data.password === data.repeatedPassword) {
-                await createAccount(data.email, data.password, data.displayName)
-            } else {
-                validate()
-            }
-        } catch (err) {
-            validate()
+            
+        } 
+        catch (err) {
         }
+    }
+
+    const navigateToLogin = () => {
+        navigate("/login")
     }
 
 
@@ -73,7 +64,10 @@ const Register = () => {
                             onChange={handleInputs}
                             type="password"/>
                 </div>
-                <button onClick={signUp} className="create-acc-btn">Utwórz konto</button>
+                <div className="btns-wrapper">
+                    <button onClick={navigateToLogin} className="create-acc-btn">Logowanie</button>
+                    <button onClick={signUp} className="create-acc-btn">Utwórz konto</button>
+                </div>
             </div>
         </form>
     )
