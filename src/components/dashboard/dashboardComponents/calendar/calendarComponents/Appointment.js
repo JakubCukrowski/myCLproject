@@ -1,13 +1,14 @@
 import React from "react";
 import Appointments from "./Appointments";
 
-const Appointment = ({visitDate, date}) => {
+const Appointment = ({date, message}) => {
 
 
     return (
-        <div>
-            {visitDate ? <Appointments date={date}/> : null}
-        </div>
+        <>
+            <Appointments date={date} message={message}/>
+        </>
+        
     )
 }
 
