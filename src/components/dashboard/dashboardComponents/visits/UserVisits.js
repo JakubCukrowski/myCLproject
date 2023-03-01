@@ -14,6 +14,8 @@ const UserVisits = ()=> {
     const [status, setStatus] = useState(false)
     const visitsRef = doc(db, 'visits', 'OAVsMc63w3nMH4mTnDy9');
 
+    //Add delete older visits after new Date
+
     useEffect(() => {
         const getCollection = async () => {
             const userData = await getDoc(userCollection)
