@@ -66,8 +66,6 @@ const Appointments = ({date, message}) => {
         }
     }
 
-    console.log(message[0]);
-
     return (
         <>
             <div className={"appointment_btn_container"}>
