@@ -17,15 +17,6 @@ import Spinner from "react-bootstrap/Spinner";
 const Dashboard = () => {
     const navigate = useNavigate()
     const {user, logout} = useAuth()
-    // const [status, setStatus] = useState(false)
-
-    // useEffect(() => {
-    //     const timeout = setTimeout(() => {
-    //         setStatus(true)
-    //     }, 200)
-
-    //     return () => timeout
-    // }, [])
 
     const handleLogOut = async () => {
         try {
@@ -41,6 +32,12 @@ const Dashboard = () => {
             <div className="navbar-wrapper">
                 {user ? <h3>Witaj, {user.displayName}</h3> : <Spinner/>}
                 <ul>
+                    <Link to="/">
+                        <li className="icon-wrapper">
+                            <FontAwesomeIcon fontSize={30} icon={faHouse}/>
+                            <p>Strona główna</p>
+                        </li>
+                    </Link>
                     <Link to="uservisits">
                         <li className="icon-wrapper">
                             <FontAwesomeIcon fontSize={30} icon={faCalendarCheck}/>
@@ -57,12 +54,6 @@ const Dashboard = () => {
                         <li className="icon-wrapper">
                             <FontAwesomeIcon fontSize={30} icon={faGear}/>
                             <p>Ustawienia konta</p>
-                        </li>
-                    </Link>
-                    <Link to="/">
-                        <li className="icon-wrapper">
-                            <FontAwesomeIcon fontSize={30} icon={faHouse}/>
-                            <p>Strona główna</p>
                         </li>
                     </Link>
                     <li className="icon-wrapper">

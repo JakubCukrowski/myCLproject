@@ -6,30 +6,18 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
+  padding-top: 10px;
 
-  .appointment-btn {
-    background-color: #69f369;
-    padding: 2px 8px;
+  .visit-time-button {
+    padding: 4px;
+    border: 0.75px solid $base-color;
     transition: 0.3s;
-    border-radius: 12px;
-    width: 50%;
-    @include tablet {
-      padding: 10px 16px;
+
+    &:hover, &:disabled {
+      background-color: $base-color;
+      color: white;
     }
 
-    &:disabled {
-      background-color: tomato;
-    }
-
-    &:not(.appointment-btn:last-child) {
-      @include tablet {
-        margin-right: 20px;
-      }
-    }
-
-    &:hover {
-      opacity: 0.7;
-    }
+    
   }
-
 }

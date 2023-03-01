@@ -12,6 +12,8 @@ const Appointments = ({date, message}) => {
     const storedVisits = collection(db, "visits")
     const [disabledTimes, setDisabledTimes] = useState([])
 
+    //Add blocking time < current time on today's date
+
     useEffect(() => {
         const tempDisabledTimes = []
         times.forEach(time => {
@@ -67,9 +69,11 @@ const Appointments = ({date, message}) => {
     return (
         <>
             <div className={"appointment_btn_container"}>
-            {times.map((time, indx) => {
+            {message === "Sobota" || message === "Niedziela" 
+            ? null
+            : times.map((time, indx) => {
                 return (
-                    <button style={{backgroundColor: disabledTimes.includes(time) ? "red" : "cornflowerblue"}}
+                    <button className="visit-time-button"
                      disabled={disabledTimes.includes(time)} onClick={updateVisit} key={indx}>{time}</button>
                 )
             })}

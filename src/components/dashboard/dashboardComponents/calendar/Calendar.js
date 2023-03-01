@@ -30,8 +30,6 @@ const MyCalendar = () => {
         weekDays.push(currDate)
     }
 
-    console.log(weekDays);
-
     return (
         <>
             <h2>Umów się na wizytę</h2>
@@ -44,7 +42,7 @@ const MyCalendar = () => {
                             {days[day.getDay()]} 
                         </p>
                         <p>
-                            {day.toLocaleDateString()}
+                            {day.toLocaleDateString("pl-PL")}
                         </p>
                     </div>
                     <Appointment date={day} message={days[day.getDay()]}/>
