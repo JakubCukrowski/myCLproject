@@ -2,12 +2,11 @@ import React, {useEffect, useState} from "react";
 import {doc, updateDoc, arrayUnion, collection, onSnapshot} from "@firebase/firestore";
 import {db} from "../../../../../firebase/firebase";
 import {useAuth} from "../../../../context/AuthContext";
-import AppointmentBtn from "./AppointmentBtn";
 
-const times = ['08:00','09:00','10:00','12:00','13:00']
 
-const Appointments = ({date}) => {
+const Appointments = ({date, message}) => {
 
+    const times = ['08:00','09:30','11:00','12:30','14:00']
     const {user} = useAuth()
     const [visitData, setVisitData] = useState([])
     const storedVisits = collection(db, "visits")
@@ -51,7 +50,7 @@ const Appointments = ({date}) => {
             await updateDoc(userDoc, {visits: arrayUnion({
                     date: date.toLocaleDateString("pl-PL"),
                     time: e.target.innerText})})
-            alert(`Wizyta zarezerwowana na ${date} o godzinie ${e.target.innerText}`)
+            alert(`Wizyta zarezerwowana na ${message}, ${date.toLocaleDateString("pl-PL")} o godzinie ${e.target.innerText}`)
 
         } else if (!(checkIfVisitIsUnavailable(date.toLocaleDateString("pl-PL"), e.target.innerText))) {
             await updateDoc(visitsDoc, {scheduledVisits: arrayUnion({
@@ -61,19 +60,21 @@ const Appointments = ({date}) => {
             await updateDoc(userDoc, {visits: arrayUnion({
                     date: date.toLocaleDateString("pl-PL"),
                     time: e.target.innerText})})
-            alert(`Wizyta zarezerwowana na ${date.toLocaleDateString("pl-PL")} o godzinie ${e.target.innerText}`)
+            alert(`Wizyta zarezerwowana na ${message}, ${date.toLocaleDateString("pl-PL")} o godzinie ${e.target.innerText}`)
         }
     }
 
     return (
-
-        <div className={"appointment_btn_container"}>
+        <>
+            <div className={"appointment_btn_container"}>
             {times.map((time, indx) => {
                 return (
-                    <AppointmentBtn disabled={disabledTimes.includes(time)} onClick={updateVisit} key={indx} title={time}/>
+                    <button style={{backgroundColor: disabledTimes.includes(time) ? "red" : "cornflowerblue"}}
+                     disabled={disabledTimes.includes(time)} onClick={updateVisit} key={indx}>{time}</button>
                 )
             })}
-        </div>
+            </div>
+        </>
     )
 }
 

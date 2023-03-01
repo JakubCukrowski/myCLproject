@@ -1,37 +1,58 @@
-import React, {useState} from 'react';
-import Calendar from 'react-calendar';
-import Appointment from "./calendarComponents/Appointment";
+import React, {useState} from "react";
+import Appointment from "./calendarComponents/Appointments";
 
 const MyCalendar = () => {
     const [date, setDate] = useState(new Date())
-    const [visit, setVisit] = useState(false)
+    const days = ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"]
+    const weekDays = []
 
-    const disable = ({date}) => {
-        return date.getDay() === 0 || date.getDay() === 6
+    const prevDay = () => {
+        setDate(prev => {
+            const newDate = new Date(prev)
+            newDate.setDate(prev.getDate() - 7)
+
+            return newDate
+        })
     }
+
+    const NextDay = () => {
+        setDate(prev => {
+            const newDate = new Date(prev)
+            newDate.setDate(prev.getDate() + 7)
+
+            return newDate
+        })
+    }
+
+    for (let i = 0; i < days.length; i++) {
+        const currDate = new Date(date)
+        currDate.setDate(date.getDate() + i);
+        weekDays.push(currDate)
+    }
+
+    console.log(weekDays);
 
     return (
         <>
-            <div className="calendar-container">
-                <h2 className="header">Zaplanuj wizytę</h2>
-                <Calendar
-                    onChange={setDate}
-                    tileDisabled={disable}
-                    tileClassName={"tile-content"}
-                    value={date}
-                    view={"month"}
-                    locale={"pl-PL"}
-                    minDate={new Date()}
-                    maxDate={new Date("2023-12-31")}
-                    onClickDay={() => setVisit(true)}/>
-            </div>
-            <div>
-                <p>{visit ? `Dostępne wizyty w dniu ${date.toLocaleDateString("pl-PL")}` : null}</p>
-                <Appointment visitDate={visit} date={date}/>
-            </div>
+            <h2>Umów się na wizytę</h2>
+            <div className="date-wrapper">
+            <button disabled={date < new Date()} onClick={prevDay}>{"<"}</button>
+                {weekDays.map((day, index) => 
+                <div key={index}>
+                    <div className="date-content">
+                        <p>
+                            {days[day.getDay()]} 
+                        </p>
+                        <p>
+                            {day.toLocaleDateString()}
+                        </p>
+                    </div>
+                    <Appointment date={day} message={days[day.getDay()]}/>
+                </div>)}
+                <button onClick={NextDay}>{">"}</button>
+            </div> 
         </>
     )
-
 }
 
-export default MyCalendar;
+export default MyCalendar

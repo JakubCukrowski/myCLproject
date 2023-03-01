@@ -17,16 +17,15 @@ import Spinner from "react-bootstrap/Spinner";
 const Dashboard = () => {
     const navigate = useNavigate()
     const {user, logout} = useAuth()
-    const [status, setStatus] = useState(false)
-    const [display, setDisplay] = useState("none")
+    // const [status, setStatus] = useState(false)
 
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            setStatus(true)
-        }, 200)
+    // useEffect(() => {
+    //     const timeout = setTimeout(() => {
+    //         setStatus(true)
+    //     }, 200)
 
-        return () => timeout
-    }, [])
+    //     return () => timeout
+    // }, [])
 
     const handleLogOut = async () => {
         try {
@@ -37,56 +36,50 @@ const Dashboard = () => {
         }
     }
 
-    const showDashboardMenu = () => {
-        setDisplay(prevState => prevState === "none" ? "block" : "none")
-    }
-
     return (
         <section className="dashboard">
-            <div className="dashboard-content-wrapper">
-                <div className="container">
-                    <Outlet/>
-                </div>
-            </div>
-            <nav style={{display}}>
-                <div className="container">
-                    {status === false ? <Spinner/> : <h3>Witaj, {user.displayName}</h3>}
+            <div className="navbar-wrapper">
+                {user ? <h3>Witaj, {user.displayName}</h3> : <Spinner/>}
+                <ul>
                     <Link to="uservisits">
-                        <div className="icon-wrapper" onClick={showDashboardMenu}>
-                            <FontAwesomeIcon fontSize={50} icon={faCalendarCheck}/>
+                        <li className="icon-wrapper">
+                            <FontAwesomeIcon fontSize={30} icon={faCalendarCheck}/>
                             <p>Twoje wizyty</p>
-                        </div>
+                        </li>
                     </Link>
                     <Link to="savevisit">
-                        <div className="icon-wrapper" onClick={showDashboardMenu}>
-                            <FontAwesomeIcon fontSize={50} icon={faCalendarPlus}/>
+                        <li className="icon-wrapper">
+                            <FontAwesomeIcon fontSize={30} icon={faCalendarPlus}/>
                             <p>Umów wizytę</p>
-                        </div>
+                        </li>
                     </Link>
                     <Link to="settings">
-                        <div className="icon-wrapper" onClick={showDashboardMenu}>
-                            <FontAwesomeIcon fontSize={50} icon={faGear}/>
+                        <li className="icon-wrapper">
+                            <FontAwesomeIcon fontSize={30} icon={faGear}/>
                             <p>Ustawienia konta</p>
-                        </div>
+                        </li>
                     </Link>
                     <Link to="/">
-                        <div className="icon-wrapper" onClick={showDashboardMenu}>
-                            <FontAwesomeIcon fontSize={50} icon={faHouse}/>
+                        <li className="icon-wrapper">
+                            <FontAwesomeIcon fontSize={30} icon={faHouse}/>
                             <p>Strona główna</p>
-                        </div>
+                        </li>
                     </Link>
-                    <button onClick={handleLogOut}>
-                        <div className="icon-wrapper">
-                            <FontAwesomeIcon fontSize={50} icon={faPowerOff}/>
+                    <li className="icon-wrapper">
+                        <button onClick={handleLogOut}>
+                            <FontAwesomeIcon fontSize={30} icon={faPowerOff}/>
                             <p>Wyloguj</p>
-                        </div>
-                    </button>
-                </div>
-            </nav>
-            <FontAwesomeIcon onClick={showDashboardMenu}
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            <div className="dashboard-content-wrapper">
+                <Outlet/>
+            </div>
+            {/* <FontAwesomeIcon onClick={showDashboardMenu}
                              className="menu-button"
                              icon={display === "none" ? faCircleArrowRight : faCircleXmark}
-                             fontSize={30}/>
+                             fontSize={30}/> */}
         </section>
     )
 }

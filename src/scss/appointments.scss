@@ -7,10 +7,6 @@
   align-items: center;
   gap: 10px;
 
-  @include tablet {
-    flex-direction: row;
-  }
-
   .appointment-btn {
     background-color: #69f369;
     padding: 2px 8px;
