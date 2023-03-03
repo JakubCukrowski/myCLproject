@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {doc, updateDoc, arrayUnion, collection, onSnapshot} from "@firebase/firestore";
+import {doc, updateDoc, arrayUnion, collection, onSnapshot, getDoc, query, where, getDocs} from "@firebase/firestore";
 import {db} from "../../../../../firebase/firebase";
 import {useAuth} from "../../../../context/AuthContext";
 
@@ -11,8 +11,15 @@ const Appointments = ({date, message}) => {
     const [visitData, setVisitData] = useState([])
     const storedVisits = collection(db, "visits")
     const [disabledTimes, setDisabledTimes] = useState([])
+    const appointmentDate = date.toLocaleDateString("pl-PL");
+    const currentDate = new Date().toLocaleDateString("pl-PL");
+    const currentTime = new Date().toLocaleTimeString("pl-PL");
 
-    //Add blocking time < current time on today's date
+    const checkIfVisitIsUnavailable = (dateString, time) => {
+        return visitData.some(visit => {
+            return time === visit.time && dateString === visit.date
+        });
+    }
 
     useEffect(() => {
         const tempDisabledTimes = []
@@ -23,13 +30,7 @@ const Appointments = ({date, message}) => {
         })
 
         setDisabledTimes(tempDisabledTimes)
-    }, [visitData, date])
-
-    const checkIfVisitIsUnavailable = (dateString, time) => {
-        return visitData.some(visit => {
-            return time === visit.time && dateString === visit.date
-        });
-    }
+    }, [visitData])
 
     useEffect(  () => {
         onSnapshot(storedVisits, (snapshot) => {
@@ -42,19 +43,14 @@ const Appointments = ({date, message}) => {
 
     const updateVisit = async (e) => {
         const userDoc = doc(db, "users", user.uid)
-        const visitsDoc = doc(db, "visits","OAVK4XngrGnMbsWkrlbO")
+        const visitsDoc = doc(db, "visits", "OAVK4XngrGnMbsWkrlbO")
+        const visitsCollection = collection(db, "visits")
+        const visitsQuery = query(visitsCollection, 
+            where("date", "==", date.toLocaleDateString("pl-PL"), 
+            where("time", "==", e.target.innerText) ))
+        const querySnapShot = await getDocs(visitsQuery)
 
-        if (visitData.length === 0) {
-            await updateDoc(visitsDoc, {scheduledVisits: arrayUnion({
-                    date: date.toLocaleDateString("pl-PL"),
-                    time: e.target.innerText})})
-
-            await updateDoc(userDoc, {visits: arrayUnion({
-                    date: date.toLocaleDateString("pl-PL"),
-                    time: e.target.innerText})})
-            alert(`Wizyta zarezerwowana na ${message}, ${date.toLocaleDateString("pl-PL")} o godzinie ${e.target.innerText}`)
-
-        } else if (!(checkIfVisitIsUnavailable(date.toLocaleDateString("pl-PL"), e.target.innerText))) {
+        if (querySnapShot.size === 0) {
             await updateDoc(visitsDoc, {scheduledVisits: arrayUnion({
                     date: date.toLocaleDateString("pl-PL"),
                     time: e.target.innerText})})
@@ -67,18 +63,21 @@ const Appointments = ({date, message}) => {
     }
 
     return (
-        <>
-            <div className={"appointment_btn_container"}>
-            {message === "Sobota" || message === "Niedziela" 
-            ? null
-            : times.map((time, indx) => {
-                return (
+        <div className={"appointment_btn_container"}>
+        {message === "Sobota" || message === "Niedziela" 
+        ? null
+        : times.map((time, indx) => {
+            if (appointmentDate === currentDate && currentTime >= time) {
+                return null;
+            }
+            return (
+                <>
                     <button className="visit-time-button"
-                     disabled={disabledTimes.includes(time)} onClick={updateVisit} key={indx}>{time}</button>
-                )
-            })}
-            </div>
-        </>
+                    disabled={disabledTimes.includes(time)} onClick={updateVisit} key={indx}>{time}</button>
+                </>
+            )
+        })}
+        </div>
     )
 }
 

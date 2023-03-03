@@ -26,6 +26,8 @@ export const AuthContextProvider = ({ children }) => {
                 await updateProfile(result.user, {
                     displayName: name})
                 const docRef = await setDoc(ref, {name: name, email: email, visits: ""})
+                const updatedUser = {...result.user, displayName: name}
+                setUser(updatedUser)
             })
 
     }
@@ -43,7 +45,7 @@ export const AuthContextProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser)
-            if (!currentUser) navigate("/")
+            // if (!currentUser) navigate("/")
             setLoading(false)
         })
 
