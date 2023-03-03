@@ -1,3 +1,5 @@
+import { faCircleArrowLeft, faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, {useState} from "react";
 import Appointment from "./calendarComponents/Appointments";
 
@@ -34,7 +36,9 @@ const MyCalendar = () => {
         <>
             <h2>Umów się na wizytę</h2>
             <div className="date-wrapper">
-            <button disabled={date < new Date()} onClick={prevDay}>{"<"}</button>
+            <button disabled={date <= new Date()} onClick={prevDay}>
+                <FontAwesomeIcon icon={faCircleArrowLeft} fontSize={30}/>
+            </button>
                 {weekDays.map((day, index) => 
                 <div key={index}>
                     <div className="date-content">
@@ -47,7 +51,9 @@ const MyCalendar = () => {
                     </div>
                     <Appointment date={day} message={days[day.getDay()]}/>
                 </div>)}
-                <button onClick={NextDay}>{">"}</button>
+                <button onClick={NextDay}>
+                    <FontAwesomeIcon icon={faCircleArrowRight} fontSize={30}/>
+                </button>
             </div> 
         </>
     )

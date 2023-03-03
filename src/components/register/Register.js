@@ -39,6 +39,8 @@ const Register = () => {
 
     const signUp = async (e) => {
         e.preventDefault()
+
+        let isFalse = false
         
         if (data.displayName.length < 3) {
             setErrors(prevState => {
@@ -47,6 +49,8 @@ const Register = () => {
                     displayName: true
                 }
             })
+
+            isFalse = true
         }
 
         if ((data.email.indexOf("@") === -1 && data.email.indexOf(".") === -1) || usersEmails.includes(data.email)) {
@@ -56,6 +60,8 @@ const Register = () => {
                     email: true
                 }
             })
+
+            isFalse = true
         }
 
         if (data.password.length < 6) {
@@ -65,18 +71,22 @@ const Register = () => {
                     password: true
                 }
             })
+
+            isFalse = true
         }
 
-        if (data.repeatedPassword !== data.password) {
+        if (data.password !== data.repeatedPassword) {
             setErrors(prevState => {
                 return {
                     ...prevState,
                     repeatedPassword: true
                 }
             })
+
+            isFalse = true
         }
 
-        if (!errors.displayName && !errors.email && !errors.password && !errors.repeatedPassword) {
+        if (!isFalse) {
             try {
                 await createAccount(data.email, data.password, data.displayName)
             } 

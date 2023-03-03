@@ -25,6 +25,12 @@ const Appointments = ({date, message}) => {
         setDisabledTimes(tempDisabledTimes)
     }, [visitData, date])
 
+    const checkIfVisitIsUnavailable = (dateString, time) => {
+        return visitData.some(visit => {
+            return time === visit.time && dateString === visit.date
+        });
+    }
+
     useEffect(  () => {
         onSnapshot(storedVisits, (snapshot) => {
             const data = snapshot.docs.map(visit => ({...visit.data()}))
@@ -34,15 +40,9 @@ const Appointments = ({date, message}) => {
 
     }, [])
 
-    const checkIfVisitIsUnavailable = (dateString, time) => {
-        return visitData.some(visit => {
-            return time === visit.time && dateString === visit.date
-        });
-    }
-
     const updateVisit = async (e) => {
         const userDoc = doc(db, "users", user.uid)
-        const visitsDoc = doc(db, "visits","OAVsMc63w3nMH4mTnDy9")
+        const visitsDoc = doc(db, "visits","OAVK4XngrGnMbsWkrlbO")
 
         if (visitData.length === 0) {
             await updateDoc(visitsDoc, {scheduledVisits: arrayUnion({
