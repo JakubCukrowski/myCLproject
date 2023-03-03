@@ -25,8 +25,7 @@ const UserVisits = ()=> {
             setStatus(true)
         }
 
-
-        getCollection()
+        return () => getCollection()
     }, [visits])
 
     const deleteVisit = async (date, time) => {
@@ -34,7 +33,7 @@ const UserVisits = ()=> {
             date: date,
             time: time
         })
-        })
+    })
 
         await updateDoc(userCollection, {visits: arrayRemove({
             date: date,
