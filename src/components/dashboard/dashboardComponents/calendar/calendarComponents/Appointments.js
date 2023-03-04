@@ -2,18 +2,22 @@ import React, {useEffect, useState} from "react";
 import {doc, updateDoc, arrayUnion, collection, onSnapshot, query, where, getDocs} from "@firebase/firestore";
 import {db} from "../../../../../firebase/firebase";
 import {useAuth} from "../../../../context/AuthContext";
+import UserVisits from "../../visits/UserVisits";
 
 
 const Appointments = ({date, message}) => {
 
-    const times = ['08:00','09:30','11:00','12:30','14:00']
+    const times = ['08:00','09:30','11:00','13:22','14:00']
     const {user} = useAuth()
     const [visitData, setVisitData] = useState([])
     const storedVisits = doc(db, "visits", "OAVK4XngrGnMbsWkrlbO")
+    const visitsCollection = collection(db, "visits")
+    const usersCollection = collection(db, "users")
     const [disabledTimes, setDisabledTimes] = useState([])
     const appointmentDate = date.toLocaleDateString("pl-PL");
     const currentDate = new Date().toLocaleDateString("pl-PL");
     const currentTime = new Date().toLocaleTimeString("pl-PL");
+    const [visitsToDelete, setVisitsToDelete] = useState([])
 
     const checkIfVisitIsUnavailable = (dateString, time) => {
         return visitData.some(visit => {
@@ -50,7 +54,6 @@ const Appointments = ({date, message}) => {
 
     const updateVisit = async (e) => {
         const userDoc = doc(db, "users", user.uid)
-        const visitsCollection = collection(db, "visits")
         const visitsQuery = query(visitsCollection, 
             where("date", "==", date.toLocaleDateString("pl-PL"), 
             where("time", "==", e.target.innerText) ))
@@ -67,12 +70,13 @@ const Appointments = ({date, message}) => {
             alert(`Wizyta zarezerwowana na ${message}, ${date.toLocaleDateString("pl-PL")} o godzinie ${e.target.innerText}`)
         }
     }
-    
+
     return (
         <div className={"appointment_btn_container"}>
         {message === "Sobota" || message === "Niedziela" 
         ? null
-        : times.map((time, indx) => {
+        : 
+        times.map((time, indx) => {
             if (appointmentDate === currentDate && currentTime >= time) {
                 return null;
             }
