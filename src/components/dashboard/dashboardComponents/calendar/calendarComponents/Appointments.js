@@ -21,13 +21,15 @@ const Appointments = ({date, message}) => {
         });
     }
 
-    //Block visit if added
+    //Block visit if exist
 
     useEffect(() => {
         const tempDisabledTimes = []
         times.forEach(time => {
             if (checkIfVisitIsUnavailable(date.toLocaleDateString("pl-PL"), time)) {
-                tempDisabledTimes.push(time)
+                tempDisabledTimes.push({
+                    time: time, 
+                    date: date.toLocaleDateString("pl-PL")})
             }
         })
 
@@ -65,7 +67,7 @@ const Appointments = ({date, message}) => {
             alert(`Wizyta zarezerwowana na ${message}, ${date.toLocaleDateString("pl-PL")} o godzinie ${e.target.innerText}`)
         }
     }
-
+    
     return (
         <div className={"appointment_btn_container"}>
         {message === "Sobota" || message === "Niedziela" 
@@ -77,7 +79,11 @@ const Appointments = ({date, message}) => {
             return (
                 <>
                     <button key={indx} className="visit-time-button"
-                    disabled={disabledTimes.includes(time)} onClick={updateVisit}>{time}</button>
+                    disabled={
+                        disabledTimes.some(data => data.time === time && data.date === date.toLocaleDateString("pl-PL"))} 
+                        onClick={updateVisit}>
+                            {time}
+                    </button>
                 </>
             )
         })}
