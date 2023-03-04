@@ -97,6 +97,10 @@ const Navbar = () => {
         }
     }
 
+    const scrollToTop = () => {
+        window.scrollTo(0, 0)
+    }
+
     return (
         <>
             <section className="navbar-section" style={{position: pathname === "/" ? "fixed" : "sticky", }}>
@@ -111,10 +115,10 @@ const Navbar = () => {
                         <FontAwesomeIcon icon={isOpen ? faXmark : faBars} className={"X_bars"} fontSize={40} onClick={showHamMenu}/>
                     </div>
                     <ul className={isMobile ? "mobile" : "desktop"} style={isMobile ? hamburgerStyles : null}>
-                        <li onClick={isOpen ? showHamMenu : null}><Link to="/offer">Oferta</Link></li>
-                        <li onClick={isOpen ? showHamMenu : null}><Link to="/contact">Kontakt</Link></li>
-                        <li onClick={isOpen ? showHamMenu : null}><Link to="/prices">Cennik</Link></li>
-                        <li onClick={isOpen ? showHamMenu : null}><Link to="/gallery">Galeria</Link></li>
+                        <li onClick={isOpen ? showHamMenu : null}><Link onClick={scrollToTop} to="/offer">Oferta</Link></li>
+                        <li onClick={isOpen ? showHamMenu : null}><Link onClick={scrollToTop} to="/contact">Kontakt</Link></li>
+                        <li onClick={isOpen ? showHamMenu : null}><Link onClick={scrollToTop} to="/prices">Cennik</Link></li>
+                        <li onClick={isOpen ? showHamMenu : null}><Link onClick={scrollToTop} to="/gallery">Galeria</Link></li>
                         <li onClick={isOpen ? showHamMenu : null}>
                             {loggingIn
                                 ? <Link to="login">Zaloguj</Link>

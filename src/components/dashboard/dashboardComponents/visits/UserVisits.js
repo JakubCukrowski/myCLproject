@@ -13,6 +13,7 @@ const UserVisits = ()=> {
     const [allVisits, setAllVisits] = useState([])
     const [status, setStatus] = useState(false)
     const visitsRef = doc(db, 'visits', 'OAVK4XngrGnMbsWkrlbO');
+    const [reload, setReload] = useState(false)
 
     //Add delete older visits after new Date
 
@@ -25,8 +26,9 @@ const UserVisits = ()=> {
             setStatus(true)
         }
 
+        setReload(false)
         return () => getCollection()
-    }, [visits])
+    }, [reload])
 
     const deleteVisit = async (date, time) => {
         await updateDoc(visitsRef, {scheduledVisits: arrayRemove({
@@ -39,6 +41,9 @@ const UserVisits = ()=> {
             date: date,
             time: time
         })})
+
+        setReload(true)
+
     }
 
     const visitCounts = () => {
