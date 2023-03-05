@@ -27,7 +27,7 @@ const UserVisits = ()=> {
         }
 
         setReload(false)
-        return () => getCollection()
+        getCollection()
     }, [reload])
 
     const deleteVisit = async (date, time) => {
@@ -61,7 +61,7 @@ const UserVisits = ()=> {
     return (
         <>
 
-            {visitCounts()}
+            {status === false ? <Spinner/> : visitCounts()}
             {visits.length > 0
                 ? <Table striped bordered hover>
                 <thead>
