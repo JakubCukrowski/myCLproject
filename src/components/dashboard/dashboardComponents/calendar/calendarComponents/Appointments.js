@@ -10,12 +10,10 @@ const Appointments = ({date, message}) => {
     const [visitData, setVisitData] = useState([])
     const storedVisits = doc(db, "visits", "ozgzhj0nxfWQIYcs7PUU")
     const visitsCollection = collection(db, "visits")
-    const usersCollection = collection(db, "users")
     const [disabledTimes, setDisabledTimes] = useState([])
     const appointmentDate = date.toLocaleDateString("pl-PL");
     const currentDate = new Date().toLocaleDateString("pl-PL");
     const currentTime = new Date().toLocaleTimeString("pl-PL");
-    const [visitsToDelete, setVisitsToDelete] = useState([])
 
     const checkIfVisitIsUnavailable = (dateString, time) => {
         return visitData.some(visit => {
