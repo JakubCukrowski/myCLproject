@@ -15,7 +15,6 @@ const AuthContext = createContext(null)
 export const AuthContextProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
-    const navigate = useNavigate()
     const usersRef = collection(db, "users")
     const [users, setUsers] = useState([])
 
@@ -45,7 +44,6 @@ export const AuthContextProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser)
-            // if (!currentUser) navigate("/")
             setLoading(false)
         })
 
