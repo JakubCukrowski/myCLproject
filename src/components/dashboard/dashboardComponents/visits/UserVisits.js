@@ -61,7 +61,7 @@ const UserVisits = ()=> {
     return (
         <>
 
-            {status === false ? <Spinner/> : visitCounts()}
+            {visitCounts()}
             {visits.length > 0
                 ? <Table striped bordered hover>
                 <thead>
