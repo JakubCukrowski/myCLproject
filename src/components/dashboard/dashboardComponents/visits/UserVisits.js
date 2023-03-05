@@ -12,7 +12,7 @@ const UserVisits = ()=> {
     const [visits, setVisits] = useState([])
     const [allVisits, setAllVisits] = useState([])
     const [status, setStatus] = useState(false)
-    const visitsRef = doc(db, 'visits', 'OAVK4XngrGnMbsWkrlbO');
+    const visitsRef = doc(db, 'visits', 'ozgzhj0nxfWQIYcs7PUU');
     const [reload, setReload] = useState(false)
 
     //Add delete older visits after new Date

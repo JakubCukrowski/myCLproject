@@ -2,15 +2,13 @@ import React, {useEffect, useState} from "react";
 import {doc, updateDoc, arrayUnion, collection, onSnapshot, query, where, getDocs} from "@firebase/firestore";
 import {db} from "../../../../../firebase/firebase";
 import {useAuth} from "../../../../context/AuthContext";
-import UserVisits from "../../visits/UserVisits";
-
 
 const Appointments = ({date, message}) => {
 
     const times = ['08:00','09:30','11:00','13:22','14:00']
     const {user} = useAuth()
     const [visitData, setVisitData] = useState([])
-    const storedVisits = doc(db, "visits", "OAVK4XngrGnMbsWkrlbO")
+    const storedVisits = doc(db, "visits", "ozgzhj0nxfWQIYcs7PUU")
     const visitsCollection = collection(db, "visits")
     const usersCollection = collection(db, "users")
     const [disabledTimes, setDisabledTimes] = useState([])
@@ -76,13 +74,13 @@ const Appointments = ({date, message}) => {
         {message === "Sobota" || message === "Niedziela" 
         ? null
         : 
-        times.map((time, indx) => {
+        times.map((time) => {
             if (appointmentDate === currentDate && currentTime >= time) {
                 return null;
             }
             return (
                 <>
-                    <button key={indx} className="visit-time-button"
+                    <button key={time} className="visit-time-button"
                     disabled={
                         disabledTimes.some(data => data.time === time && data.date === date.toLocaleDateString("pl-PL"))} 
                         onClick={updateVisit}>
