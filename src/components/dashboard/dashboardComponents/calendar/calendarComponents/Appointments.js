@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {doc, updateDoc, arrayUnion, collection, onSnapshot, query, where, getDocs} from "@firebase/firestore";
+import {doc, updateDoc, arrayUnion, collection, onSnapshot, query, where, getDoc, getDocs, arrayRemove} from "@firebase/firestore";
 import {db} from "../../../../../firebase/firebase";
 import {useAuth} from "../../../../context/AuthContext";
 
 const Appointments = ({date, message}) => {
 
-    const times = ['08:00','09:30','11:00','13:22','14:00']
+    const times = ['08:00','09:30','11:00','12:30','20:52']
     const {user} = useAuth()
     const [visitData, setVisitData] = useState([])
     const storedVisits = doc(db, "visits", "ozgzhj0nxfWQIYcs7PUU")
