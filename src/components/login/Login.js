@@ -6,7 +6,7 @@ const Login = () => {
     const [data, setData] = useState( {
         email: "",
         password: ""
-    } )
+    })
     const navigate = useNavigate()
     const [errors, setErrors] = useState({
         email: false,
