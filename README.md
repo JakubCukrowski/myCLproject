@@ -1,4 +1,5 @@
-Psychology website, where you can create an account and schedule a visit. </br>
+Psychology website, using react.js. </br>
+You can create an account and schedule a visit, check your visits and manage them. </br>
 Project uses firestore and firebase </br>
-Live version https://glowing-fairy-cfad8a.netlify.app/#/ </br>
-Project is not finished
+Live version https://papaya-ganache-634af2.netlify.app/ </br>
+
