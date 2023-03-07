@@ -9,11 +9,11 @@ const db = admin.firestore();
 const storedVisits = doc(db, "visits", "ozgzhj0nxfWQIYcs7PUU")
 const usersCollection = collection(db, 'users');
 
-exports.handler = async (event, context) => {
+exports.handler = async () => {
     const allSavedVisits = await getDoc(storedVisits)
     const visitsArray = allSavedVisits.data().scheduledVisits
     const filterVisits = visitsArray
-        .filter(visit => visit.date <= currentDate)
+        .filter(visit => visit.date <= new Date().toLocaleDateString("pl-PL"))
         .filter(visit => visit.time < `${new Date().getHours()}:${new Date().getMinutes()}`)
 
     if (filterVisits.length > 0) {
