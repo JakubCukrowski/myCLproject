@@ -1,4 +1,5 @@
-const admin = require("firebase-admin")
+const admin = require("firebase-admin");
+const { async } = require("q");
 const serviceAccount = require("../.netlify/psychology-77338-firebase-adminsdk-tscp5-74406d4aa3.json")
 
 admin.initializeApp({
@@ -9,7 +10,7 @@ const db = admin.firestore();
 const storedVisits = doc(db, "visits", "ozgzhj0nxfWQIYcs7PUU")
 const usersCollection = collection(db, 'users');
 
-export async function handler() {
+exports.handler = async () => {
     const allSavedVisits = await getDoc(storedVisits)
     const visitsArray = allSavedVisits.data().scheduledVisits
     const filterVisits = visitsArray
