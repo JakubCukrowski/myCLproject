@@ -1,8 +1,8 @@
-import { initializeApp, credential as _credential, firestore } from "firebase-admin";
-import serviceAccount from "../../.netlify/psychology-77338-firebase-adminsdk-tscp5-74406d4aa3.json";
+const admin = require("firebase-admin")
+const serviceAccount = require("../.netlify/psychology-77338-firebase-adminsdk-tscp5-74406d4aa3.json")
 
-initializeApp({
-    credential: _credential.cert(serviceAccount)
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
 })
 
 const db = firestore();
