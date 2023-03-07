@@ -1,18 +1,17 @@
 import React, {useEffect, useState} from "react";
-import {doc, updateDoc, arrayUnion, collection, onSnapshot, query, where, getDoc, getDocs, arrayRemove} from "@firebase/firestore";
+import {doc, updateDoc, arrayUnion, collection, onSnapshot, query, where, getDocs} from "@firebase/firestore";
 import {db} from "../../../../../firebase/firebase";
 import {useAuth} from "../../../../context/AuthContext";
 
 const Appointments = ({date, message}) => {
 
-    const times = ['08:00','09:30','11:00','12:30','20:52']
-    const {user} = useAuth()
+    const times = ['08:00','09:30','11:00','12:30','14:00']
+    const {user, currentDate} = useAuth()
     const [visitData, setVisitData] = useState([])
     const storedVisits = doc(db, "visits", "ozgzhj0nxfWQIYcs7PUU")
     const visitsCollection = collection(db, "visits")
     const [disabledTimes, setDisabledTimes] = useState([])
     const appointmentDate = date.toLocaleDateString("pl-PL");
-    const currentDate = new Date().toLocaleDateString("pl-PL");
     const currentTime = new Date().toLocaleTimeString("pl-PL");
 
     const checkIfVisitIsUnavailable = (dateString, time) => {
