@@ -2,7 +2,18 @@ import * as admin from "firebase-admin";
 const serviceAccount = require("../../.netlify/psychology-77338-firebase-adminsdk-tscp5-74406d4aa3.json")
 
 admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
+    credential: admin.credential.cert({
+        type: process.env.TYPE,
+        projectId: process.env.PROJECT_ID,
+        privateKeyId: process.env.PRIVATE_KEY_ID,
+        privateKey: process.env.PRIVATE_KEY,
+        clientEmail: process.env.CLIENT_EMAIL,
+        clientId: process.env.CLIENT_ID,
+        authUri: process.env.AUTH_URI,
+        tokenUri: process.env.TOKEN_URI,
+        authProviderX509: process.env.AUTH_PROVIDER_X509_CERT_URL,
+        clientProviderX509: process.env.CLIENT_X509_CERT_URL
+    })
 })
 
 const db = admin.firestore();
