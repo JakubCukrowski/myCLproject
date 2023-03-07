@@ -3,7 +3,7 @@ import * as admin from "firebase-admin";
 admin.initializeApp({
     credential: admin.credential.cert({
         type: process.env.TYPE,
-        projectId: process.env.PROJECT_ID,
+        projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
         privateKeyId: process.env.PRIVATE_KEY_ID,
         privateKey: process.env.PRIVATE_KEY,
         clientEmail: process.env.CLIENT_EMAIL,
