@@ -1,5 +1,4 @@
 import * as admin from "firebase-admin";
-const serviceAccount = require("../../.netlify/psychology-77338-firebase-adminsdk-tscp5-74406d4aa3.json")
 
 admin.initializeApp({
     credential: admin.credential.cert({
