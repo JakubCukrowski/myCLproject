@@ -5,7 +5,7 @@ admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 })
 
-const db = firestore();
+const db = admin.firestore();
 const storedVisits = doc(db, "visits", "ozgzhj0nxfWQIYcs7PUU")
 const usersCollection = collection(db, 'users');
 
