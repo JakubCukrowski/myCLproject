@@ -16,8 +16,9 @@ export const AuthContextProvider = ({ children }) => {
     const [loading, setLoading] = useState(true)
     const usersRef = collection(db, "users")
     const [users, setUsers] = useState([])
-    const storedVisits = doc(db, "visits", "ozgzhj0nxfWQIYcs7PUU")
-    const usersCollection = collection(db, "users")
+    // const storedVisits = doc(db, "visits", "ozgzhj0nxfWQIYcs7PUU")
+    // const usersCollection = collection(db, "users")
+    const currentDate = new Date().toLocaleDateString("pl-PL");
 
     const createAccount = (email, password, name) => {
         return createUserWithEmailAndPassword(auth, email, password)
@@ -51,40 +52,40 @@ export const AuthContextProvider = ({ children }) => {
         return () => unsubscribe()
     }, [user])
 
-    useEffect(() => {
-        const intervalID = setInterval(() => {
-            const deleteOlderVisits = async () => {
-                const allSavedVisits = await getDoc(storedVisits)
-                const visitsArray = allSavedVisits.data().scheduledVisits
-                const filterVisits = visitsArray
-                    .filter(visit => visit.date <= new Date().toLocaleDateString("pl-PL"))
-                    .filter(visit => visit.time < `${new Date().getHours()}:${new Date().getMinutes()}`)
-        
-        
-                if (filterVisits.length !== 0) {
-                    const usersVisitsQuery = query(usersCollection, 
-                        where("visits", "array-contains-any", [{date: filterVisits[0].date, time: filterVisits[0].time}]))  
+    //Function moved to cron-jobs
+
+    // useEffect(() => {
+    //     const deleteOlderVisits = async () => {
+    //         const allSavedVisits = await getDoc(storedVisits)
+    //         const visitsArray = allSavedVisits.data().scheduledVisits
+    //         const filterVisits = visitsArray
+    //             .filter(visit => visit.date <= currentDate)
+    //             .filter(visit => visit.time < `${new Date().getHours()}:${new Date().getMinutes()}`)
+    
+    //         if (filterVisits.length > 0) {
+    //             for (let i = 0; i < filterVisits.length; i++) {
+    //                 const usersVisitsQuery = query(usersCollection, 
+    //                     where("visits", "array-contains-any", [{date: filterVisits[i].date, time: filterVisits[i].time}])) 
+                         
                         
-                    const UsersVisitsQuerySnapshot = await getDocs(usersVisitsQuery)  
-                    const userWithPastVisit = UsersVisitsQuerySnapshot.docs.map(user => ({...user.data(), id: user.id}))
-                    const userDoc = doc(db, "users", userWithPastVisit[0].id)  
+    //                 const UsersVisitsQuerySnapshot = await getDocs(usersVisitsQuery)  
+    //                 const userWithPastVisit = UsersVisitsQuerySnapshot.docs.map(user => ({...user.data(), id: user.id}))
+    //                 const userDoc = doc(db, "users", userWithPastVisit[i].id)  
         
-                    await updateDoc(storedVisits, {scheduledVisits: arrayRemove({
-                        date: filterVisits[0].date,
-                        time: filterVisits[0].time
-                    })})
+    //                 await updateDoc(storedVisits, {scheduledVisits: arrayRemove({
+    //                     date: filterVisits[i].date,
+    //                     time: filterVisits[i].time
+    //                 })})
         
-                    await updateDoc(userDoc, {visits: arrayRemove({
-                        date: filterVisits[0].date,
-                        time: filterVisits[0].time
-                    })})
-           
-                }
-            }
-            deleteOlderVisits()
-        }, 1000 * 60 * 30);
-        return () => clearInterval(intervalID)
-    }, [])
+    //                 await updateDoc(userDoc, {visits: arrayRemove({
+    //                     date: filterVisits[i].date,
+    //                     time: filterVisits[i].time
+    //                 })})
+    //             }
+    //         }
+    //     }
+    //     deleteOlderVisits()
+    // }, [])
 
 
     const signIn = (email, password) => {
@@ -98,7 +99,7 @@ export const AuthContextProvider = ({ children }) => {
     }
 
  return (
-     <AuthContext.Provider value={{createAccount, user, signIn, logout, users}}>
+     <AuthContext.Provider value={{createAccount, user, signIn, logout, users, currentDate}}>
          {!loading && children}
      </AuthContext.Provider>
 
