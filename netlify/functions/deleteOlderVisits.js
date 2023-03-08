@@ -37,7 +37,7 @@ exports.handler = async function() {
                  
                 
             const UsersVisitsQuerySnapshot = await getDocs(usersVisitsQuery)  
-            const userWithPastVisit = UsersVisitsQuerySnapshot.docs.map(user => ({...user.data(), id: user.id}))
+            const userWithPastVisit = UsersVisitsQuerySnapshot.docs.map(user => ({...user.data(), id: user.uid}))
             const userDoc = doc(db, "users", userWithPastVisit[i].id)  
 
             await updateDoc(storedVisits, {scheduledVisits: arrayRemove({
