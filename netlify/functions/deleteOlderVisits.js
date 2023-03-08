@@ -1,7 +1,6 @@
 // import * as admin from "firebase-admin";
 
 import { doc, collection, getDoc, getDocs, query, updateDoc, arrayRemove, where } from "@firebase/firestore";
-import { useAuth } from "../../src/components/context/AuthContext";
 import { db } from "../../src/firebase/firebase";
 
 
