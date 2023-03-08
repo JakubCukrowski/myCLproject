@@ -1,6 +1,7 @@
 // import * as admin from "firebase-admin";
 
 import { doc, collection, getDoc, getDocs, query, updateDoc, arrayRemove, where } from "@firebase/firestore";
+import { useAuth } from "../../src/components/context/AuthContext";
 import { db } from "../../src/firebase/firebase";
 
 
@@ -22,6 +23,7 @@ import { db } from "../../src/firebase/firebase";
 
 const storedVisits = doc(db, "visits", "ozgzhj0nxfWQIYcs7PUU")
 const usersCollection = collection(db, 'users');
+const {user} = useAuth()
 
 exports.handler = async function() {
     const allSavedVisits = await getDoc(storedVisits)
@@ -37,7 +39,7 @@ exports.handler = async function() {
                  
                 
             const UsersVisitsQuerySnapshot = await getDocs(usersVisitsQuery)  
-            const userWithPastVisit = UsersVisitsQuerySnapshot.docs.map(user => ({...user.data(), id: user.uid}))
+            const userWithPastVisit = UsersVisitsQuerySnapshot.docs.map(user => ({...user.data(), id: user.id}))
             const userDoc = doc(db, "users", userWithPastVisit[i].id)  
 
             await updateDoc(storedVisits, {scheduledVisits: arrayRemove({
