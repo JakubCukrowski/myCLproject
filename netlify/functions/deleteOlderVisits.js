@@ -1,6 +1,6 @@
 // import * as admin from "firebase-admin";
 
-import { doc, collection, getDoc, query, updateDoc, arrayRemove, where } from "@firebase/firestore";
+import { doc, collection, getDoc, getDocs, query, updateDoc, arrayRemove, where } from "@firebase/firestore";
 import { db } from "../../src/firebase/firebase";
 
 
