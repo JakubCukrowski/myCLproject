@@ -1,5 +1,5 @@
 import * as admin from "firebase-admin";
-const { privateKey } = JSON.parse(process.env.PRIVATE_KEY)
+const { private_key } = JSON.parse(process.env.PRIVATE_KEY)
 
 admin.initializeApp({
     credential: admin.credential.cert({
