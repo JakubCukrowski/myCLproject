@@ -1,18 +1,18 @@
 import * as admin from "firebase-admin";
-const { private_key } = JSON.parse(process.env.PRIVATE_KEY)
+const { private_key } = JSON.parse(process.env.REACT_APP_PRIVATE_KEY)
 
 admin.initializeApp({
     credential: admin.credential.cert({
         type: process.env.TYPE,
-        project_id: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-        private_key_id: process.env.PRIVATE_KEY_ID,
+        project_id: process.env.REACT_APP_PROJECT_ID,
+        private_key_id: process.env.REACT_APP_PRIVATE_KEY_ID,
         private_key: private_key,
-        client_email: process.env.CLIENT_EMAIL,
-        client_id: process.env.CLIENT_ID,
-        auth_uri: process.env.AUTH_URI,
-        token_uri: process.env.TOKEN_URI,
-        auth_provider_x509: process.env.AUTH_PROVIDER_X509_CERT_URL,
-        client_provider_x509: process.env.CLIENT_X509_CERT_URL
+        client_email: process.env.REACT_APP_CLIENT_EMAIL,
+        client_id: process.env.REACT_APP_CLIENT_ID,
+        auth_uri: process.env.REACT_APP_AUTH_URI,
+        token_uri: process.env.REACT_APP_TOKEN_URI,
+        auth_provider_x509: process.env.REACT_APP_AUTH_PROVIDER_X509_CERT_URL,
+        client_provider_x509: process.env.REACT_APP_CLIENT_X509_CERT_URL
     })
 })
 
