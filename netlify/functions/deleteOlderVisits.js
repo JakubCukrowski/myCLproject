@@ -23,7 +23,6 @@ import { db } from "../../src/firebase/firebase";
 
 const storedVisits = doc(db, "visits", "ozgzhj0nxfWQIYcs7PUU")
 const usersCollection = collection(db, 'users');
-const {user} = useAuth()
 
 exports.handler = async function() {
     const allSavedVisits = await getDoc(storedVisits)
