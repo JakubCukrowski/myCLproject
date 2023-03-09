@@ -48,13 +48,13 @@ const UserVisits = ()=> {
 
     const visitCounts = () => {
         if (visits.length === 0) {
-            return <h1>Nie masz żadnych wizyt</h1>
+            return <h2>Nie masz żadnych wizyt</h2>
         } else if (visits.length === 1) {
-            return <h1>Masz zaplanowaną {visits.length} wizytę</h1>
+            return <h2>Masz zaplanowaną {visits.length} wizytę</h2>
         } else if (visits.length > 1 && visits.length <= 4) {
-            return <h1>Masz zaplanowane {visits.length} wizyty</h1>
+            return <h2>Masz zaplanowane {visits.length} wizyty</h2>
         } else {
-            return <h1>Masz zaplanowanych {visits.length} wizyt</h1>
+            return <h2>Masz zaplanowanych {visits.length} wizyt</h2>
         }
     }
 
@@ -63,7 +63,8 @@ const UserVisits = ()=> {
 
             {status === false ? <Spinner/> : visitCounts()}
             {visits.length > 0
-                ? <Table striped bordered hover>
+                ? <div className="container">
+                <Table striped bordered hover>
                 <thead>
                 <tr>
                     <th>#</th>
@@ -73,7 +74,10 @@ const UserVisits = ()=> {
                 </tr>
                 </thead>
                 <tbody>
-                {visits.map((visit, indx) =>
+                {visits
+                    .sort((a, b) => a.time.localeCompare(b.time))
+                    .sort((a, b) => new Date(a.date.split(".").reverse().join("-")) - new Date(b.date.split(".").reverse().join("-")))
+                    .map((visit, indx) =>
                     <tr key={indx}>
                         <td>{indx + 1}</td>
                         <td>{visit.time}</td>
@@ -82,6 +86,7 @@ const UserVisits = ()=> {
                     </tr>)}
                 </tbody>
             </Table>
+                </div>
                 : null}
         </>
     )
