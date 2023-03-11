@@ -39,6 +39,11 @@ const Dashboard = () => {
 
     const handleHamburgerMenu = () => {
         setIsOpen(prev => !prev)
+        if (isOpen === false) {
+            document.querySelector("body").style.overflow = "hidden"
+        } else {
+            document.querySelector("body").style.overflow = "auto"
+        }
     }
 
     return (
