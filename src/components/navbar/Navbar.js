@@ -10,45 +10,8 @@ const Navbar = () => {
     const {user} = useAuth()
     const {pathname} = useLocation()
     const [loggingIn, setLoggingIn] = useState(true)
-    const mediaQuery = "(max-width: 900px)";
-    const mediaQueryMatch = window.matchMedia(mediaQuery);
-    const [isMobile, setIsMobile] = useState(false);
     const [isOpen, setIsOpen] = useState(false)
     const [isScrolled, setIsscrolled] = useState(false)
-
-    const [hamburgerStyles, setHamburgerStyles] = useState({
-        display: "none",
-        right: -300
-    })
-
-    useEffect(() => {
-        const checkScreenWidth = () => {
-            if (window.innerWidth < 900) {
-                setIsMobile(true)
-            } else {
-                setIsMobile(false)
-                setIsOpen(false)
-                setHamburgerStyles({
-                    display: "none",
-                    right: -300
-                })
-            }
-        }
-        return checkScreenWidth()
-    },[])
-
-    useEffect(() => {
-        const handleClassByMediaQuery = (event) => {
-            const isMobile = event.matches;
-
-            return setIsMobile(isMobile);
-        };
-        mediaQueryMatch.addEventListener("change", handleClassByMediaQuery);
-
-        return () => {
-            mediaQueryMatch.removeEventListener("change", handleClassByMediaQuery);
-        };
-    }, [isMobile, mediaQueryMatch, isOpen]);
 
     useEffect(() => {
         if (user !== null) {
@@ -63,6 +26,7 @@ const Navbar = () => {
         if (pathname !== "/"){
             setIsscrolled(true)
             nav.classList.add("scrolled")
+            setIsOpen(false)
             
         } else {
             nav.classList.remove("scrolled")
@@ -85,16 +49,7 @@ const Navbar = () => {
     }, [pathname, isScrolled])
 
     const showHamMenu = () => {
-        setHamburgerStyles(prevState => ({
-            display: prevState.display === "none" ? "flex" : "none",
-            right: prevState.right === -300 ? 0 : -300
-        }))
-        setIsOpen(prevState => !prevState)
-        if (isOpen === false) {
-            document.querySelector("body").style.overflow = "hidden"
-        } else {
-            document.querySelector("body").style.overflow = "auto"
-        }
+        setIsOpen(prev => !prev)
     }
 
     const scrollToTop = () => {
@@ -103,7 +58,7 @@ const Navbar = () => {
 
     return (
         <>
-            <section className="navbar-section" style={{position: pathname === "/" ? "fixed" : "sticky", }}>
+            <section className="navbar-section">
                 <div className="navbar-container">
                 <Link to="/">
                     <div className="logo-container">
@@ -112,9 +67,9 @@ const Navbar = () => {
                     </div>
                 </Link>
                     <div className={"hamburger-menu"}>
-                        <FontAwesomeIcon icon={isOpen ? faXmark : faBars} className={"X_bars"} fontSize={40} onClick={showHamMenu}/>
+                        <FontAwesomeIcon icon={isOpen ? faXmark : faBars} className={"X_bars"} onClick={showHamMenu}/>
                     </div>
-                    <ul className={isMobile ? "mobile" : "desktop"} style={isMobile ? hamburgerStyles : null}>
+                    <ul className={isOpen? "links open" : "links"}>
                         <li onClick={isOpen ? showHamMenu : null}><Link onClick={scrollToTop} to="/offer">Oferta</Link></li>
                         <li onClick={isOpen ? showHamMenu : null}><Link onClick={scrollToTop} to="/contact">Kontakt</Link></li>
                         <li onClick={isOpen ? showHamMenu : null}><Link onClick={scrollToTop} to="/prices">Cennik</Link></li>

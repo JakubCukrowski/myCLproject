@@ -61,50 +61,16 @@
     width: 100px;
   }
 
-  .desktop {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    height: auto;
-    width: auto;
-    right: 0;
-    gap: 0;
-    background-color: transparent;
-    font-family: 'Libre Baskerville', serif;
-    text-transform: uppercase;
-    font-size: 16px;
-
-    li {
-      border-bottom: 1px solid transparent;
-      margin-right: 20px;
-
-      a {
-        text-decoration: none;
-        font-weight: 100;
-        color: white;
-        padding: 6px;
-        transition: 0.3s ease;
-        border-bottom: 0.75px solid transparent;
-    
-        &:hover {
-          color: $on-hover-color;
-          border-bottom: 0.75px solid $on-hover-color;
-        }
-      }
-    }
-  }
-
-  .mobile {
+  .links {
+    opacity: 0;
     position: absolute;
     top: -10px;
-    right: -300px;
-    display: none;
+    right: -100%;
+    width: 100%;
+    display: flex;
     background-color: white;
     height: 100vh;
-    width: 100%;
-    transition: 0.3s;
+    transition: 0.3s ease-in-out;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
@@ -113,6 +79,11 @@
     text-transform: uppercase;
     font-size: 20px;
 
+    &.open {
+      opacity: 1;
+      right: 0;
+    }
+
     li {
       border-bottom: 1px solid transparent;
       margin-right: 20px;
@@ -120,6 +91,12 @@
       a {
         text-decoration: none;
         color: $text-color;
+
+        @include tablet {
+          color: white;
+          font-size: 18px;
+          font-weight: 100;
+        }
     
         &:hover {
           color: $on-hover-color;
@@ -135,6 +112,17 @@
       }
     }
 
+    @include tablet {
+      position: static;
+      flex-direction: row;
+      justify-content: space-around;
+      opacity: 1;
+      background-color: transparent;
+      height: auto;
+      width: auto;
+
+    }
+
   }
 }
 
@@ -143,6 +131,7 @@
 
   .X_bars {
     color: black;
+    font-size: 40px;
   }
 
   @include tablet {
