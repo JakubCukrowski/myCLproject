@@ -6,7 +6,9 @@ import {
     faCalendarPlus,
     faGear,
     faHouse,
-    faPowerOff
+    faPowerOff,
+    faBars,
+    faXmark
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useAuth} from "../context/AuthContext";
@@ -16,6 +18,7 @@ const Dashboard = () => {
     const navigate = useNavigate()
     const {user, logout} = useAuth()
     const [status, setStatus] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -34,30 +37,39 @@ const Dashboard = () => {
         }
     }
 
+    const handleHamburgerMenu = () => {
+        setIsOpen(prev => !prev)
+        if (isOpen === false) {
+            document.querySelector("body").style.overflow = "hidden"
+        } else {
+            document.querySelector("body").style.overflow = "auto"
+        }
+    }
+
     return (
-        <section className="dashboard">
-            <div className="navbar-wrapper">
+        <section className={`dashboard ${isOpen ? "blocked" : ""}`}>
+            <div className={`navbar-wrapper ${isOpen ? "open" : ""}`}>
                 {status ? <h3>Witaj, {user.displayName}</h3> : <Spinner/>}
                 <ul>
-                    <Link to="/">
+                    <Link onClick={handleHamburgerMenu} to="/">
                         <li className="icon-wrapper">
                             <FontAwesomeIcon fontSize={30} icon={faHouse}/>
                             <p>Strona główna</p>
                         </li>
                     </Link>
-                    <Link to="uservisits">
+                    <Link onClick={handleHamburgerMenu} to="uservisits">
                         <li className="icon-wrapper">
                             <FontAwesomeIcon fontSize={30} icon={faCalendarCheck}/>
                             <p>Twoje wizyty</p>
                         </li>
                     </Link>
-                    <Link to="savevisit">
+                    <Link onClick={handleHamburgerMenu} to="savevisit">
                         <li className="icon-wrapper">
                             <FontAwesomeIcon fontSize={30} icon={faCalendarPlus}/>
                             <p>Umów wizytę</p>
                         </li>
                     </Link>
-                    <Link to="settings">
+                    <Link onClick={handleHamburgerMenu} to="settings">
                         <li className="icon-wrapper">
                             <FontAwesomeIcon fontSize={30} icon={faGear}/>
                             <p>Ustawienia konta</p>
@@ -71,13 +83,15 @@ const Dashboard = () => {
                     </li>
                 </ul>
             </div>
+            <div className="top-line">
+                <FontAwesomeIcon className="menu-button"
+                                icon={isOpen ? faXmark : faBars}
+                                onClick={handleHamburgerMenu}
+                                fontSize={30}/>
+            </div>
             <div className="dashboard-content-wrapper">
                 <Outlet/>
             </div>
-            {/* <FontAwesomeIcon onClick={showDashboardMenu}
-                             className="menu-button"
-                             icon={display === "none" ? faCircleArrowRight : faCircleXmark}
-                             fontSize={30}/> */}
         </section>
     )
 }

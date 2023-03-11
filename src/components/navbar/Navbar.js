@@ -50,6 +50,11 @@ const Navbar = () => {
 
     const showHamMenu = () => {
         setIsOpen(prev => !prev)
+        if (isOpen === false) {
+            document.querySelector("body").style.overflow = "hidden"
+        } else {
+            document.querySelector("body").style.overflow = "auto"
+        }
     }
 
     const scrollToTop = () => {
@@ -58,7 +63,7 @@ const Navbar = () => {
 
     return (
         <>
-            <section className="navbar-section">
+            <section className="navbar-section" style={{position: pathname === "/" ? "fixed" : "sticky"}}>
                 <div className="navbar-container">
                 <Link to="/">
                     <div className="logo-container">
