@@ -9,9 +9,12 @@
   padding-top: 10px;
 
   .visit-time-button {
+    display: block;
     padding: 4px;
     border: 0.75px solid $base-color;
     transition: 0.3s;
+    width: 5em;
+    text-align: center;
 
     &:hover, &:disabled {
       background-color: $base-color;

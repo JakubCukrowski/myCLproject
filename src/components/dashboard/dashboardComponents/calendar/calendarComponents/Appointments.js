@@ -76,14 +76,12 @@ const Appointments = ({date, message}) => {
                 return null;
             }
             return (
-                <>
-                    <button key={time} className="visit-time-button"
-                    disabled={
-                        disabledTimes.some(data => data.time === time && data.date === date.toLocaleDateString("pl-PL"))} 
-                        onClick={updateVisit}>
-                            {time}
-                    </button>
-                </>
+                <button key={time} className="visit-time-button"
+                disabled={
+                    disabledTimes.some(data => data.time === time && data.date === date.toLocaleDateString("pl-PL"))} 
+                    onClick={updateVisit}>
+                        {time}
+                </button>
             )
         })}
         </div>
