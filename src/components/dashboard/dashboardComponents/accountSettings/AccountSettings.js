@@ -3,6 +3,8 @@ import {useAuth} from "../../../context/AuthContext";
 import {updateProfile, updateEmail} from "firebase/auth";
 import {doc, updateDoc} from "@firebase/firestore";
 import {db} from "../../../../firebase/firebase";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope, faUser } from "@fortawesome/free-regular-svg-icons";
 
 const AccountSettings = () => {
 
@@ -45,13 +47,22 @@ const AccountSettings = () => {
         console.log(userData.displayName, userData.email)
     }
 
+    //ADD PAST VISITS VIEW OPTION
+    //ADD PAYMENT METHOD SELECT/ OR SOMETHING
+
     return (
         <>
             <h2>Zarządzanie kontem</h2>
             <div className="user-data-container">
-                <p>Imię: {user.displayName.toUpperCase()}</p>
+                <div>
+                    <FontAwesomeIcon icon={faUser} fontSize={40}/>
+                    <p>Imię: {user.displayName.toUpperCase()}</p>
+                </div>
                 {editing ? <input onChange={handleInputs} value={userData.displayName} type="text" name="displayName"/> : null}
-                <p>Email: {user.email}</p>
+                <div>
+                    <FontAwesomeIcon icon={faEnvelope} fontSize={40}/>
+                    <p>Email: {user.email}</p>
+                </div>
                 {editing ? <input onChange={handleInputs} value={userData.email} type="email" name="email"/> : null}
                 <div>
                     <button onClick={handleEdit} className="edit-btn">{editing ? "Anuluj" : "Edytuj"}</button>
