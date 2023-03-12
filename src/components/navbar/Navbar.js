@@ -65,12 +65,12 @@ const Navbar = () => {
         <>
             <section className="navbar-section" style={{position: pathname === "/" ? "fixed" : "sticky"}}>
                 <div className="navbar-container">
-                <Link to="/">
-                    <div className="logo-container">
-                        <FontAwesomeIcon icon={faHeart} fontSize={80} color={"white"} style={{paddingLeft: 10}}/>
-                        <p>Pracownia psychologiczna</p>
-                    </div>
-                </Link>
+                    <Link to="/">
+                        <div className="logo-container">
+                            <FontAwesomeIcon icon={faHeart} fontSize={80} color={"white"} style={{paddingLeft: 10}}/>
+                            <p>Pracownia psychologiczna</p>
+                        </div>
+                    </Link>
                     <div className={"hamburger-menu"}>
                         <FontAwesomeIcon icon={isOpen ? faXmark : faBars} className={"X_bars"} onClick={showHamMenu}/>
                     </div>
