@@ -58,7 +58,7 @@
   .links {
     opacity: 0;
     position: absolute;
-    top: -100%;
+    top: -100vh;
     right: 0;
     width: 100%;
     display: flex;
@@ -72,6 +72,7 @@
     font-family: 'Libre Baskerville', serif;
     text-transform: uppercase;
     font-size: 20px;
+    margin: 0 !important;
 
     &.open {
       opacity: 1;
