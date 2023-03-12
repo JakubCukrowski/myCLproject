@@ -66,6 +66,22 @@ const Appointments = ({date, message}) => {
         }
     }
 
+
+    const disableCloserVisits = (date, time) => {
+        const newDate = new Date()
+        newDate.setHours(parseInt(time.split(":")[0]), parseInt(time.split(":")[1]), 0)
+        if (date.toLocaleDateString("pl-PL") === new Date().toLocaleDateString("pl-PL")
+        && new Date().getHours() + 1 >= newDate.getHours()) {
+            return true
+        }
+    }
+
+    const disableSavedVisits = (date, time) => {
+        if (disabledTimes.some((data => data.time === time && data.date === date.toLocaleDateString("pl-PL")))) {
+            return true
+        }
+    }
+
     return (
         <div className={"appointment_btn_container"}>
         {message === "Sobota" || message === "Niedziela" 
@@ -76,9 +92,8 @@ const Appointments = ({date, message}) => {
                 return null;
             }
             return (
-                <button key={time} className="visit-time-button"
-                disabled={
-                    disabledTimes.some(data => data.time === time && data.date === date.toLocaleDateString("pl-PL"))} 
+                <button key={time} className={`visit-time-button ${disableCloserVisits(date, time) ? "unavailable" : ""}`}
+                disabled={disableCloserVisits(date, time) || disableSavedVisits(date, time)} 
                     onClick={updateVisit}>
                         {time}
                 </button>
