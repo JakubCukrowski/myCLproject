@@ -149,8 +149,8 @@ const Register = () => {
                     
                 </div>
                 <div className="btns-wrapper">
-                    <button onClick={navigateToLogin} className="create-acc-btn">Logowanie</button>
                     <button onClick={signUp} className="create-acc-btn">Utwórz konto</button>
+                    <button onClick={navigateToLogin} className="create-acc-btn">Logowanie</button>
                 </div>
             </div>
         </form>

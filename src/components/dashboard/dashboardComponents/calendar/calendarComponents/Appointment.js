@@ -1,12 +1,12 @@
 import React from "react";
 import Appointments from "./Appointments";
 
-const Appointment = ({date, message}) => {
+const Appointment = ({date, weekDay}) => {
 
 
     return (
         <>
-            <Appointments date={date} message={message}/>
+            <Appointments date={date} weekDay={weekDay}/>
         </>
         
     )

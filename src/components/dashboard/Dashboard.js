@@ -19,6 +19,7 @@ const Dashboard = () => {
     const {user, logout} = useAuth()
     const [status, setStatus] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
+    const [isBlocked, setIsBlocked] = useState(false)
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -41,7 +42,7 @@ const Dashboard = () => {
         if (window.innerWidth <= 900) {
             setIsOpen(prev => !prev)
         }
-        if (isOpen === false && window.innerWidth <= 900 ) {
+        if ((isOpen === false && window.innerWidth <= 900) || isBlocked === false) {
             document.querySelector("body").style.overflow = "hidden"
         } else {
             document.querySelector("body").style.overflow = "auto"
@@ -49,7 +50,7 @@ const Dashboard = () => {
     }
 
     return (
-        <section className={`dashboard ${isOpen ? "blocked" : ""}`}>
+        <section className={`dashboard ${isOpen || isBlocked ? "blocked" : ""}`}>
             <div className={`navbar-wrapper ${isOpen ? "open" : ""}`}>
                 {status ? <h3>Witaj, {user.displayName}</h3> : <Spinner/>}
                 <ul>
@@ -89,10 +90,11 @@ const Dashboard = () => {
                 <FontAwesomeIcon className="menu-button"
                                 icon={isOpen ? faXmark : faBars}
                                 onClick={handleHamburgerMenu}
+                                style={{zIndex: isBlocked ? 0 : 500}}
                                 fontSize={30}/>
             </div>
             <div className="dashboard-content-wrapper">
-                <Outlet/>
+                <Outlet context={[isBlocked, setIsBlocked]}/>
             </div>
         </section>
     )

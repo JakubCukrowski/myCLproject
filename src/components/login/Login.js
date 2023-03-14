@@ -69,7 +69,7 @@ const Login = () => {
         <section>
             <form className="login-wrapper">
                 <div className="container">
-                    <p>Aby sprawdzić swoje wizyty, zaloguj się</p>
+                    <p>Aby sprawdzić swoje wizyty, <br/> zaloguj się</p>
                     <div className="email-wrapper">
                         <label>Email
                             <input className={errors.email ? "error" : null} 
@@ -80,7 +80,7 @@ const Login = () => {
                         </label>
                         {errors.email  
                         ? <span style={{display: "block", color: "tomato", fontSize: 12}}>
-                            Podany email nie istnieje
+                            {data.email.length === 0 ? "Podaj email" : "Podany email nie istnieje"}
                             </span> 
                         : null}
                     </div>

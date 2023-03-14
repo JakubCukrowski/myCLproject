@@ -24,3 +24,17 @@
     
   }
 }
+
+.ok-btn {
+  padding: 0.4em;
+  background-color: burlywood;
+  border-radius: 0.4em;
+  color: white;
+  display: flex;
+  justify-content: center;
+  width: 40%;
+
+  @include tablet {
+    width: 20%;
+  }
+}

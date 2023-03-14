@@ -2,8 +2,10 @@ import React, {useEffect, useState} from "react";
 import {doc, updateDoc, arrayUnion, collection, onSnapshot, query, where, getDocs} from "@firebase/firestore";
 import {db} from "../../../../../firebase/firebase";
 import {useAuth} from "../../../../context/AuthContext";
+import { Popup } from "../../../../Popup/Popup";
+import { useOutletContext } from "react-router-dom";
 
-const Appointments = ({date, message}) => {
+const Appointments = ({date, weekDay}) => {
 
     const times = ['08:00','09:30','11:00','12:30','14:00']
     const {user, currentDate} = useAuth()
@@ -13,6 +15,10 @@ const Appointments = ({date, message}) => {
     const [disabledTimes, setDisabledTimes] = useState([])
     const appointmentDate = date.toLocaleDateString("pl-PL");
     const currentTime = new Date().toLocaleTimeString("pl-PL");
+    const [isClicked, setIsClicked] = useState(false)
+    const [selectedTime, setSelectedTime] = useState("")
+    const [isBlocked, setIsBlocked] = useOutletContext()
+    const [successMessage, setSuccessMessage] = useState("")
 
     const checkIfVisitIsUnavailable = (dateString, time) => {
         return visitData.some(visit => {
@@ -47,31 +53,43 @@ const Appointments = ({date, message}) => {
 
     //Add visit to firebase
 
-    const updateVisit = async (e) => {
+    const updateVisit = async (time) => {
         const userDoc = doc(db, "users", user.uid)
         const visitsQuery = query(visitsCollection, 
             where("date", "==", date.toLocaleDateString("pl-PL"), 
-            where("time", "==", e.target.innerText) ))
+            where("time", "==", time) ))
         const querySnapShot = await getDocs(visitsQuery)
 
         if (querySnapShot.size === 0) {
             await updateDoc(storedVisits, {scheduledVisits: arrayUnion({
                     date: date.toLocaleDateString("pl-PL"),
-                    time: e.target.innerText})})
+                    time: time})})
 
             await updateDoc(userDoc, {visits: arrayUnion({
                     date: date.toLocaleDateString("pl-PL"),
-                    time: e.target.innerText})})
-            alert(`Wizyta zarezerwowana na ${message}, ${date.toLocaleDateString("pl-PL")} o godzinie ${e.target.innerText}`)
+                    time: time})})
+
+                    setIsClicked(false)
+                    setSuccessMessage("Wizyta zarezerwowana! Do zobaczenia.")
         }
+    }
+
+    const showConfirmation = (time) => {
+        setIsClicked(true)
+        setIsBlocked(true)
+        setSelectedTime(time)
+    }
+
+    const hideConfirmation = () => {
+        setIsClicked(false)
+        setIsBlocked(false)
     }
 
 
     const disableCloserVisits = (date, time) => {
-        const newDate = new Date()
-        newDate.setHours(parseInt(time.split(":")[0]), parseInt(time.split(":")[1]), 0)
+        date.setHours(parseInt(time.split(":")[0]), parseInt(time.split(":")[1]), 0)
         if (date.toLocaleDateString("pl-PL") === new Date().toLocaleDateString("pl-PL")
-        && new Date().getHours() + 1 >= newDate.getHours()) {
+        && new Date().getHours() + 1 >= date.getHours()) {
             return true
         }
     }
@@ -82,9 +100,15 @@ const Appointments = ({date, message}) => {
         }
     }
 
+    const handleSuccessMessage = () => {
+        setSuccessMessage("")
+        setIsBlocked(false)
+    }
+
     return (
-        <div className={"appointment_btn_container"}>
-        {message === "Sobota" || message === "Niedziela" 
+        <>
+            <div className={"appointment_btn_container"}>
+        {weekDay === "Sobota" || weekDay === "Niedziela" 
         ? null
         : 
         times.map((time) => {
@@ -93,13 +117,27 @@ const Appointments = ({date, message}) => {
             }
             return (
                 <button key={time} className={`visit-time-button ${disableCloserVisits(date, time) ? "unavailable" : ""}`}
-                disabled={disableCloserVisits(date, time) || disableSavedVisits(date, time)} 
-                    onClick={updateVisit}>
+                    disabled={disableCloserVisits(date, time) || disableSavedVisits(date, time)} 
+                    onClick={() => showConfirmation(time)}>
                         {time}
                 </button>
             )
         })}
+        {isClicked 
+                    ? <Popup 
+                        date={date.toLocaleDateString("pl-PL")} 
+                        weekDay={weekDay} 
+                        time={selectedTime} 
+                        cancel={hideConfirmation}
+                        updateVisit={updateVisit} />
+                    : null}            
         </div>
+        {successMessage !== "" 
+        ? <div className="confirmation-popup">
+            <p>{successMessage}</p>
+            <button className="ok-btn" onClick={handleSuccessMessage}>OK</button>
+            </div> : null}
+        </>
     )
 }
 
