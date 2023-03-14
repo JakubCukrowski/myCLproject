@@ -83,7 +83,7 @@ const MyCalendar = () => {
                             {day.toLocaleDateString("pl-PL")}
                         </p>
                     </div>
-                    <Appointment date={day} message={days[day.getDay()]}/>
+                    <Appointment date={day} weekDay={days[day.getDay()]}/>
                 </div>)}
                 <button onClick={nextDays}>
                     <FontAwesomeIcon icon={faCircleArrowRight} fontSize={30}/>
