@@ -99,6 +99,7 @@ const Register = () => {
 
     const navigateToLogin = () => {
         navigate("/login")
+        window.scrollTo(0, 0)
     }
 
 

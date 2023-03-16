@@ -5,7 +5,7 @@ import {useAuth} from "../../../../context/AuthContext";
 import { Popup } from "../../../../Popup/Popup";
 import { useOutletContext } from "react-router-dom";
 
-const Appointments = ({date, weekDay}) => {
+const Appointments = ({currDay, weekDays, weekDay}) => {
 
     const times = ['08:00','09:30','11:00','12:30','14:00']
     const {user, currentDate} = useAuth()
@@ -13,7 +13,7 @@ const Appointments = ({date, weekDay}) => {
     const storedVisits = doc(db, "visits", "ozgzhj0nxfWQIYcs7PUU")
     const visitsCollection = collection(db, "visits")
     const [disabledTimes, setDisabledTimes] = useState([])
-    const appointmentDate = date.toLocaleDateString("pl-PL");
+    const appointmentDate = currDay.toLocaleDateString("pl-PL");
     const currentTime = new Date().toLocaleTimeString("pl-PL");
     const [isClicked, setIsClicked] = useState(false)
     const [selectedTime, setSelectedTime] = useState("")
@@ -26,20 +26,21 @@ const Appointments = ({date, weekDay}) => {
         });
     }
 
+
     //Block visit if exist
 
     useEffect(() => {
         const tempDisabledTimes = []
         times.forEach(time => {
-            if (checkIfVisitIsUnavailable(date.toLocaleDateString("pl-PL"), time)) {
+            if (checkIfVisitIsUnavailable(appointmentDate, time)) {
                 tempDisabledTimes.push({
                     time: time, 
-                    date: date.toLocaleDateString("pl-PL")})
+                    date: currDay.toLocaleDateString("pl-PL")})
             }
         })
 
         setDisabledTimes(tempDisabledTimes)
-    }, [visitData])
+    }, [visitData, currDay])
 
     //Check for scheduled visits
 
@@ -56,17 +57,17 @@ const Appointments = ({date, weekDay}) => {
     const updateVisit = async (time) => {
         const userDoc = doc(db, "users", user.uid)
         const visitsQuery = query(visitsCollection, 
-            where("date", "==", date.toLocaleDateString("pl-PL"), 
+            where("date", "==", currDay.toLocaleDateString("pl-PL"), 
             where("time", "==", time) ))
         const querySnapShot = await getDocs(visitsQuery)
 
         if (querySnapShot.size === 0) {
             await updateDoc(storedVisits, {scheduledVisits: arrayUnion({
-                    date: date.toLocaleDateString("pl-PL"),
+                    date: currDay.toLocaleDateString("pl-PL"),
                     time: time})})
 
             await updateDoc(userDoc, {visits: arrayUnion({
-                    date: date.toLocaleDateString("pl-PL"),
+                    date: currDay.toLocaleDateString("pl-PL"),
                     time: time})})
 
                     setIsClicked(false)
@@ -116,8 +117,8 @@ const Appointments = ({date, weekDay}) => {
                 return null;
             }
             return (
-                <button key={time} className={`visit-time-button ${disableCloserVisits(date, time) ? "unavailable" : ""}`}
-                    disabled={disableCloserVisits(date, time) || disableSavedVisits(date, time)} 
+                <button key={time} className={`visit-time-button ${disableCloserVisits(currDay, time) ? "unavailable" : ""}`}
+                    disabled={disableCloserVisits(currDay, time) || disableSavedVisits(currDay, time)} 
                     onClick={() => showConfirmation(time)}>
                         {time}
                 </button>
@@ -125,7 +126,7 @@ const Appointments = ({date, weekDay}) => {
         })}
         {isClicked 
                     ? <Popup 
-                        date={date.toLocaleDateString("pl-PL")} 
+                        date={currDay.toLocaleDateString("pl-PL")} 
                         weekDay={weekDay} 
                         time={selectedTime} 
                         cancel={hideConfirmation}

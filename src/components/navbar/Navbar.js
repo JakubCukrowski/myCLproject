@@ -81,7 +81,7 @@ const Navbar = () => {
                         <li onClick={isOpen ? showHamMenu : null}><Link onClick={scrollToTop} to="/gallery">Galeria</Link></li>
                         <li onClick={isOpen ? showHamMenu : null}>
                             {loggingIn
-                                ? <Link to="login">Zaloguj</Link>
+                                ? <Link onClick={scrollToTop} to="login">Zaloguj</Link>
                                 : <Link to="dashboard/savevisit">Witaj, {user.displayName}</Link>}
                         </li>
                     </ul>

@@ -19,6 +19,7 @@ import AccountSettings from "./components/dashboard/dashboardComponents/accountS
 import UserVisits from "./components/dashboard/dashboardComponents/visits/UserVisits";
 import ProtectedRouteToLogin from "./components/protectedRoute/ProtectedRouteToLogin";
 import MyCalendar from "./components/dashboard/dashboardComponents/calendar/Calendar";
+import { ThreeColumns } from "./components/threeColumns/ThreeColumns";
 
 const App = () => {
 
@@ -26,7 +27,7 @@ const App = () => {
         <AuthContextProvider>
             <Routes>
                 <Route path="/" element={<Layout/>}>
-                    <Route path="/" element={<><Hero/><About/><UncontrolledExample/></>} />
+                    <Route path="/" element={<><Hero/><ThreeColumns/><About/><UncontrolledExample/></>} />
                     <Route path="info" element={<Info />} />
                     <Route path="gallery" element={<Gallery/>} />
                     <Route path="offer" element={<Offer/>} />

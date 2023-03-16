@@ -1,0 +1,17 @@
+.three-columns {
+    background-color: $base-color;
+
+    .container {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 1em 0;
+        font-size: 1.6em;
+        color: white;
+        text-align: center;
+
+        span {
+            font-size: 1.9em;
+        }
+    }
+}
