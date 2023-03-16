@@ -14,7 +14,7 @@ const Footer = () => {
                     <FontAwesomeIcon fontSize={40} icon={faFacebook} />
                 </a>
                 <a href="https://www.instagram.com" target="_blank" rel="noreferrer">
-                    <FontAwesomeIcon fontSize={40} icon={faInstagram} />
+                    <img className="ig-logo" src={require("../footer/images/174855.png")} alt="ig"/>
                 </a>
                 <a href="https://www.twitter.com" target="_blank" rel="noreferrer">
                     <FontAwesomeIcon fontSize={40} icon={faTwitter}/>

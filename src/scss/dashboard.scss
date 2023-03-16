@@ -107,7 +107,12 @@
     display: none;
   }
 
+  .user-display-top {
+    margin: 0 auto;
+  }
+
   .menu-button {
     z-index: 500;
+    position: fixed;
   }
 }
