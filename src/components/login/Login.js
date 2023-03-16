@@ -19,6 +19,7 @@ const Login = () => {
     const handleRegister = (e) => {
         e.preventDefault()
         navigate("/register")
+        window.scrollTo(0, 0)
     }
 
     const onInputsChange = (e) => {
