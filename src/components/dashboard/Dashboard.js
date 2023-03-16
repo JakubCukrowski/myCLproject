@@ -42,7 +42,7 @@ const Dashboard = () => {
         if (window.innerWidth <= 900) {
             setIsOpen(prev => !prev)
         }
-        if ((isOpen === false && window.innerWidth <= 900) || isBlocked === false) {
+        if ((isOpen === false && window.innerWidth <= 900)) {
             document.querySelector("body").style.overflow = "hidden"
         } else {
             document.querySelector("body").style.overflow = "auto"
@@ -87,6 +87,7 @@ const Dashboard = () => {
                 </ul>
             </div>
             <div className="top-line">
+                {isOpen ? null : <h3 className="user-display-top">{`Witaj, ${user.displayName}`}</h3>}
                 <FontAwesomeIcon className="menu-button"
                                 icon={isOpen ? faXmark : faBars}
                                 onClick={handleHamburgerMenu}
