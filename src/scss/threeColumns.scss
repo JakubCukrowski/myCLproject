@@ -4,6 +4,7 @@
     .container {
         display: flex;
         justify-content: space-around;
+        flex-wrap: wrap;
         align-items: center;
         padding: 1em 0;
         font-size: 1.6em;

@@ -9,6 +9,7 @@ const MyCalendar = () => {
     const weekDays = []
     const [windowSize, setWindowSize] = useState(window.innerWidth)
     const [showDays, setShowDays] = useState(7)
+    const [visitType, setVisitType] = useState("")
 
     useEffect(() => {
         const handleResize = () => {
@@ -69,26 +70,37 @@ const MyCalendar = () => {
     return (
         <>
             <h2>Umów się na wizytę</h2>
-            <div className="date-wrapper">
+            <div className="dropdown">
+                <label htmlFor="visitType">Wybierz rodzaj wizyty</label>
+                <select name="visitType" defaultValue="" onChange={(e) => setVisitType(e.target.value)}>
+                    <option value="" hidden disabled>-- wybierz --</option>
+                    <option>Konsultacja psychologiczna dla osób dorosłych</option>
+                    <option>Konsultacja psychologiczna dla dzieci i młodzieży</option>
+                    <option>Konsultacja dla par</option>
+                </select>
+            </div>
+            {visitType !== "" 
+            ? <div className="date-wrapper">
             <button disabled={date <= new Date()} onClick={prevDays}>
                 <FontAwesomeIcon icon={faCircleArrowLeft} fontSize={30}/>
             </button>
-                {weekDays.map((day, index) => 
-                <div key={index}>
-                    <div className="date-content">
-                        <p>
-                            {days[day.getDay()]} 
-                        </p>
-                        <p>
-                            {day.toLocaleDateString("pl-PL")}
-                        </p>
-                    </div>
-                    <Appointment currDay={day} weekDays={weekDays} weekDay={days[day.getDay()]}/>
-                </div>)}
-                <button onClick={nextDays}>
-                    <FontAwesomeIcon icon={faCircleArrowRight} fontSize={30}/>
-                </button>
-            </div> 
+            {weekDays.map((day, index) => 
+            <div key={index}>
+                <div className="date-content">
+                    <p>
+                        {days[day.getDay()]} 
+                    </p>
+                    <p>
+                        {day.toLocaleDateString("pl-PL")}
+                    </p>
+                </div>
+                <Appointment currDay={day} visitType={visitType} weekDay={days[day.getDay()]}/>
+            </div>)}
+            <button onClick={nextDays}>
+                <FontAwesomeIcon icon={faCircleArrowRight} fontSize={30}/>
+            </button>
+        </div> 
+        : null}
         </>
     )
 }

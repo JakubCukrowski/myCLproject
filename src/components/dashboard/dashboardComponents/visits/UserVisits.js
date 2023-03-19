@@ -60,7 +60,6 @@ const UserVisits = ()=> {
 
     return (
         <>
-
             {status === false ? <Spinner/> : visitCounts()}
             {visits.length > 0
                 ? <div className="container">
