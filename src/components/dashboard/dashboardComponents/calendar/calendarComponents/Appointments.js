@@ -1,16 +1,17 @@
 import React, {useEffect, useState} from "react";
-import {doc, updateDoc, arrayUnion, collection, onSnapshot, query, where, getDocs} from "@firebase/firestore";
+import {doc, updateDoc, arrayUnion, collection, onSnapshot, query, where, getDocs, arrayRemove} from "@firebase/firestore";
 import {db} from "../../../../../firebase/firebase";
 import {useAuth} from "../../../../context/AuthContext";
 import { Popup } from "../../../../Popup/Popup";
 import { useOutletContext } from "react-router-dom";
 
-const Appointments = ({currDay, weekDays, weekDay}) => {
+const Appointments = ({currDay, weekDay, visitType}) => {
 
     const times = ['08:00','09:30','11:00','12:30','14:00']
     const {user, currentDate} = useAuth()
     const [visitData, setVisitData] = useState([])
     const storedVisits = doc(db, "visits", "ozgzhj0nxfWQIYcs7PUU")
+    const tempBlockedVisits = doc(db, "temporaryBlocked", "IoNHZT2QMuMHsTuNC13Z")
     const visitsCollection = collection(db, "visits")
     const [disabledTimes, setDisabledTimes] = useState([])
     const appointmentDate = currDay.toLocaleDateString("pl-PL");
@@ -19,6 +20,7 @@ const Appointments = ({currDay, weekDays, weekDay}) => {
     const [selectedTime, setSelectedTime] = useState("")
     const [isBlocked, setIsBlocked] = useOutletContext()
     const [successMessage, setSuccessMessage] = useState("")
+    const [tempBlockedButtons, setTempBlockedButtons] = useState([])
 
     const checkIfVisitIsUnavailable = (dateString, time) => {
         return visitData.some(visit => {
@@ -45,8 +47,18 @@ const Appointments = ({currDay, weekDays, weekDay}) => {
     //Check for scheduled visits
 
     useEffect(  () => {
-        const unsubscribe = onSnapshot(storedVisits, async (snapshot) => {
+        const unsubscribe = onSnapshot(storedVisits,{includeMetadataChanges: true}, async (snapshot) => {
             setVisitData(snapshot.data().scheduledVisits)
+        })
+
+        return () => unsubscribe()
+    }, [])
+
+    //Temporary disabled buttons
+
+    useEffect(  () => {
+        const unsubscribe = onSnapshot(tempBlockedVisits, async (snapshot) => {
+            setTempBlockedButtons(snapshot.data().tempBlockedVisits)
         })
 
         return () => unsubscribe()
@@ -68,22 +80,31 @@ const Appointments = ({currDay, weekDays, weekDay}) => {
 
             await updateDoc(userDoc, {visits: arrayUnion({
                     date: currDay.toLocaleDateString("pl-PL"),
-                    time: time})})
+                    time: time,
+                    type: visitType})})
 
                     setIsClicked(false)
                     setSuccessMessage("Wizyta zarezerwowana! Do zobaczenia.")
         }
     }
 
-    const showConfirmation = (time) => {
+    const showConfirmation = async (time) => {
         setIsClicked(true)
         setIsBlocked(true)
         setSelectedTime(time)
+        await updateDoc(tempBlockedVisits, {tempBlockedVisits: arrayUnion({
+            date: currDay.toLocaleDateString("pl-PL"),
+            time: time
+        })})
     }
 
-    const hideConfirmation = () => {
+    const hideConfirmation = async (time, date) => {
         setIsClicked(false)
         setIsBlocked(false)
+        await updateDoc(tempBlockedVisits, {tempBlockedVisits: arrayRemove({
+            date: date,
+            time: time
+        })})
     }
 
 
@@ -109,35 +130,36 @@ const Appointments = ({currDay, weekDays, weekDay}) => {
     return (
         <>
             <div className={"appointment_btn_container"}>
-        {weekDay === "Sobota" || weekDay === "Niedziela" 
-        ? null
-        : 
-        times.map((time) => {
-            if (appointmentDate === currentDate && currentTime >= time) {
-                return null;
-            }
-            return (
-                <button key={time} className={`visit-time-button ${disableCloserVisits(currDay, time) ? "unavailable" : ""}`}
-                    disabled={disableCloserVisits(currDay, time) || disableSavedVisits(currDay, time)} 
-                    onClick={() => showConfirmation(time)}>
-                        {time}
-                </button>
-            )
-        })}
-        {isClicked 
-                    ? <Popup 
-                        date={currDay.toLocaleDateString("pl-PL")} 
-                        weekDay={weekDay} 
-                        time={selectedTime} 
-                        cancel={hideConfirmation}
-                        updateVisit={updateVisit} />
-                    : null}            
-        </div>
-        {successMessage !== "" 
-        ? <div className="confirmation-popup">
-            <p>{successMessage}</p>
-            <button className="ok-btn" onClick={handleSuccessMessage}>OK</button>
-            </div> : null}
+            {weekDay === "Sobota" || weekDay === "Niedziela" 
+            ? null
+            : 
+            times.map((time) => {
+                if (appointmentDate === currentDate && currentTime >= time) {
+                    return null;
+                }
+                return (
+                    <button key={time} className={`visit-time-button ${disableCloserVisits(currDay, time) ? "unavailable" : ""}`}
+                        disabled={disableCloserVisits(currDay, time) || disableSavedVisits(currDay, time) 
+                        || tempBlockedButtons.some(btn => btn.date === currDay.toLocaleDateString("pl-PL") && btn.time === time)} 
+                        onClick={() => showConfirmation(time)}>
+                            {time}
+                    </button>
+                )
+            })}
+            {isClicked 
+                        ? <Popup 
+                            date={currDay.toLocaleDateString("pl-PL")} 
+                            weekDay={weekDay} 
+                            time={selectedTime} 
+                            cancel={hideConfirmation}
+                            updateVisit={updateVisit} />
+                        : null}            
+            </div>
+            {successMessage !== "" 
+            ? <div className="confirmation-popup">
+                <p>{successMessage}</p>
+                <button className="ok-btn" onClick={handleSuccessMessage}>OK</button>
+                </div> : null}
         </>
     )
 }

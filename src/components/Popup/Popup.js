@@ -8,7 +8,7 @@ export const Popup = ({date, weekDay, time, updateVisit, cancel}) => {
                 <p>Rezerwujesz wizytę na {weekDay}, {date} o godzinie {time}</p>
                 <div>
                     <button onClick={() => updateVisit(time)}>Akceptuj</button>
-                    <button onClick={() => cancel()}>Anuluj</button>
+                    <button onClick={() => cancel(time, date)}>Anuluj</button>
                 </div>
             </div>
         </>
