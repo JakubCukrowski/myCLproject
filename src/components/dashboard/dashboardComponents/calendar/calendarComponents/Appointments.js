@@ -7,7 +7,7 @@ import { useOutletContext } from "react-router-dom";
 
 const Appointments = ({currDay, weekDay, visitType}) => {
 
-    const times = ['08:00','09:30','11:00','12:30','22:22']
+    const times = ['08:00','09:30','11:00','12:30','22:27']
     const {user, currentDate} = useAuth()
     const [visitData, setVisitData] = useState([])
     const storedVisits = doc(db, "visits", "ozgzhj0nxfWQIYcs7PUU")
@@ -141,7 +141,9 @@ const Appointments = ({currDay, weekDay, visitType}) => {
                 }
                 return (
                     <button key={time} className={`visit-time-button ${disableCloserVisits(currDay, time) ? "unavailable" : ""}`}
-                        disabled={disableCloserVisits(currDay, time) || disableSavedVisits(currDay, time) 
+                        disabled={
+                        // disableCloserVisits(currDay, time) || 
+                        disableSavedVisits(currDay, time) 
                         || tempBlockedButtons.some(btn => btn.date === currDay.toLocaleDateString("pl-PL") && btn.time === time)} 
                         onClick={() => showConfirmation(time)}>
                             {time}
