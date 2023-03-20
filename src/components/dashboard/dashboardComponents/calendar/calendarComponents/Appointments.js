@@ -76,7 +76,8 @@ const Appointments = ({currDay, weekDay, visitType}) => {
         if (querySnapShot.size === 0) {
             await updateDoc(storedVisits, {scheduledVisits: arrayUnion({
                     date: currDay.toLocaleDateString("pl-PL"),
-                    time: time})})
+                    time: time,
+                    type: visitType})})
 
             await updateDoc(userDoc, {visits: arrayUnion({
                     date: currDay.toLocaleDateString("pl-PL"),
