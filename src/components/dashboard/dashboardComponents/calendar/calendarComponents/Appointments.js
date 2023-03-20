@@ -7,7 +7,7 @@ import { useOutletContext } from "react-router-dom";
 
 const Appointments = ({currDay, weekDay, visitType}) => {
 
-    const times = ['08:00','09:30','11:00','12:30','14:00']
+    const times = ['08:00','09:30','11:00','12:30','22:17']
     const {user, currentDate} = useAuth()
     const [visitData, setVisitData] = useState([])
     const storedVisits = doc(db, "visits", "ozgzhj0nxfWQIYcs7PUU")
