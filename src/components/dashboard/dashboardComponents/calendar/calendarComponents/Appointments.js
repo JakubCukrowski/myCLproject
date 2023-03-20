@@ -7,7 +7,7 @@ import { useOutletContext } from "react-router-dom";
 
 const Appointments = ({currDay, weekDay, visitType}) => {
 
-    const times = ['08:00','09:30','11:00','12:30','22:27']
+    const times = ['08:00','09:30','11:00','12:30','23:06']
     const {user, currentDate} = useAuth()
     const [visitData, setVisitData] = useState([])
     const storedVisits = doc(db, "visits", "ozgzhj0nxfWQIYcs7PUU")
@@ -76,7 +76,8 @@ const Appointments = ({currDay, weekDay, visitType}) => {
         if (querySnapShot.size === 0) {
             await updateDoc(storedVisits, {scheduledVisits: arrayUnion({
                     date: currDay.toLocaleDateString("pl-PL"),
-                    time: time})})
+                    time: time,
+                    type: visitType})})
 
             await updateDoc(userDoc, {visits: arrayUnion({
                     date: currDay.toLocaleDateString("pl-PL"),

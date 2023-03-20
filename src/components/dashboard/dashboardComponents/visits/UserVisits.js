@@ -33,7 +33,8 @@ const UserVisits = ()=> {
     const deleteVisit = async (date, time, type) => {
         await updateDoc(visitsRef, {scheduledVisits: arrayRemove({
             date: date,
-            time: time
+            time: time,
+            type: type
         })
     })
 
