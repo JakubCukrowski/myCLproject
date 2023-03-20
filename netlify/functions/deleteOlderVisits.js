@@ -14,7 +14,10 @@ exports.handler = async function() {
     if (filterVisits.length > 0) {
         for (let i = 0; i < filterVisits.length; i++) {
             const usersVisitsQuery = query(usersCollection, 
-                where("visits", "array-contains-any", [{date: filterVisits[i].date, time: filterVisits[i].time}])) 
+                where("visits", "array-contains-any", [{
+                    date: filterVisits[i].date, 
+                    time: filterVisits[i].time, 
+                    type: filterVisits[i].type}])) 
                  
                 
             const UsersVisitsQuerySnapshot = await getDocs(usersVisitsQuery)  
