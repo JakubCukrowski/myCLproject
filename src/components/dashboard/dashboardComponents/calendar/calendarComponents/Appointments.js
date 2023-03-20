@@ -94,7 +94,8 @@ const Appointments = ({currDay, weekDay, visitType}) => {
         setSelectedTime(time)
         await updateDoc(tempBlockedVisits, {tempBlockedVisits: arrayUnion({
             date: currDay.toLocaleDateString("pl-PL"),
-            time: time
+            time: time,
+            type: visitType
         })})
     }
 
@@ -103,7 +104,8 @@ const Appointments = ({currDay, weekDay, visitType}) => {
         setIsBlocked(false)
         await updateDoc(tempBlockedVisits, {tempBlockedVisits: arrayRemove({
             date: date,
-            time: time
+            time: time,
+            type: visitType
         })})
     }
 
