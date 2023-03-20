@@ -30,7 +30,7 @@ const UserVisits = ()=> {
         getCollection()
     }, [reload])
 
-    const deleteVisit = async (date, time) => {
+    const deleteVisit = async (date, time, type) => {
         await updateDoc(visitsRef, {scheduledVisits: arrayRemove({
             date: date,
             time: time
@@ -39,7 +39,8 @@ const UserVisits = ()=> {
 
         await updateDoc(userCollection, {visits: arrayRemove({
             date: date,
-            time: time
+            time: time,
+            type: type
         })})
 
         setReload(true)
@@ -81,7 +82,11 @@ const UserVisits = ()=> {
                         <td>{indx + 1}</td>
                         <td>{visit.time}</td>
                         <td>{visit.date}</td>
-                        <td><button onClick={() => deleteVisit(visit.date, visit.time)} className={"delete-visit-btn"}>Usuń</button></td>
+                        <td>
+                            <button onClick={() => deleteVisit(visit.date, visit.time, visit.type)} className={"delete-visit-btn"}>
+                                Usuń
+                            </button>
+                        </td>
                     </tr>)}
                 </tbody>
             </Table>

@@ -23,12 +23,14 @@ exports.handler = async function() {
 
             await updateDoc(storedVisits, {scheduledVisits: arrayRemove({
                 date: filterVisits[i].date,
-                time: filterVisits[i].time
+                time: filterVisits[i].time,
+                type: filterVisits[i].type
             })})
 
             await updateDoc(userDoc, {visits: arrayRemove({
                 date: filterVisits[i].date,
-                time: filterVisits[i].time
+                time: filterVisits[i].time,
+                type: filterVisits[i].type
             })})
         }
     }
