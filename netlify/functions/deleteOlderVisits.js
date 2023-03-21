@@ -10,7 +10,7 @@ exports.handler = async function() {
     querySnapshot.forEach(doc => visits.push(...doc.data().visits))
     const filterVisits = visits
         .filter(visit => visit.date <= new Date().toLocaleDateString("pl-PL"))
-        .filter(visit => visit.time < `${new Date().getHours()}:${new Date().getMinutes()}`)
+        .filter(visit => visit.time <= `${new Date().getHours()}:${new Date().getMinutes()}`)
 
     if (filterVisits.length > 0) {
         for (let i = 0; i < filterVisits.length; i++) {
