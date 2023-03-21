@@ -11,6 +11,8 @@ exports.handler = async function() {
         .filter(visit => visit.date <= new Date().toLocaleDateString("pl-PL"))
         .filter(visit => visit.time < `${new Date().getHours()}:${new Date().getMinutes()}`)
 
+        console.log(filterVisits);
+
     if (filterVisits.length > 0) {
         for (let i = 0; i < filterVisits.length; i++) {
             const usersVisitsQuery = query(usersCollection, 
