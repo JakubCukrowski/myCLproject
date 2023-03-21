@@ -9,21 +9,23 @@ const Appointments = ({currDay, weekDay, visitType}) => {
 
     const times = ['08:00','09:30','11:00','12:30','20:10']
     const {user, currentDate} = useAuth()
-    const [visitData, setVisitData] = useState([])
-    const storedVisits = doc(db, "visits", "ozgzhj0nxfWQIYcs7PUU")
-    const tempBlockedVisits = doc(db, "temporaryBlocked", "IoNHZT2QMuMHsTuNC13Z")
-    const visitsCollection = collection(db, "visits")
+    const [allVisits, setAllVisits] = useState([])
+    
+    const usersCollection = collection(db, "users")
     const [disabledTimes, setDisabledTimes] = useState([])
     const appointmentDate = currDay.toLocaleDateString("pl-PL");
     const currentTime = new Date().toLocaleTimeString("pl-PL");
+
     const [isClicked, setIsClicked] = useState(false)
     const [selectedTime, setSelectedTime] = useState("")
     const [isBlocked, setIsBlocked] = useOutletContext()
     const [successMessage, setSuccessMessage] = useState("")
     const [tempBlockedButtons, setTempBlockedButtons] = useState([])
 
+    const tempBlockedVisits = doc(db, "temporaryBlocked", "IoNHZT2QMuMHsTuNC13Z")
+
     const checkIfVisitIsUnavailable = (dateString, time) => {
-        return visitData.some(visit => {
+        return allVisits.some(visit => {
             return time === visit.time && dateString === visit.date
         });
     }
@@ -42,13 +44,15 @@ const Appointments = ({currDay, weekDay, visitType}) => {
         })
 
         setDisabledTimes(tempDisabledTimes)
-    }, [visitData, currDay])
+    }, [allVisits, currDay])
 
     //Check for scheduled visits
 
     useEffect(  () => {
-        const unsubscribe = onSnapshot(storedVisits,{includeMetadataChanges: true}, async (snapshot) => {
-            setVisitData(snapshot.data().scheduledVisits)
+        const visits = []
+        const unsubscribe = onSnapshot(usersCollection, async (snapshot) => {
+            snapshot.forEach(user => visits.push(...user.data().visits))   
+            setAllVisits(visits)
         })
 
         return () => unsubscribe()
@@ -67,18 +71,13 @@ const Appointments = ({currDay, weekDay, visitType}) => {
     //Add visit to firebase
 
     const updateVisit = async (time) => {
-        const userDoc = doc(db, "users", user.uid)
-        const visitsQuery = query(visitsCollection, 
+        const userDoc = doc(usersCollection, user.uid)
+        const visitsQuery = query(usersCollection, 
             where("date", "==", currDay.toLocaleDateString("pl-PL"), 
             where("time", "==", time) ))
         const querySnapShot = await getDocs(visitsQuery)
 
         if (querySnapShot.size === 0) {
-            await updateDoc(storedVisits, {scheduledVisits: arrayUnion({
-                    date: currDay.toLocaleDateString("pl-PL"),
-                    time: time,
-                    type: visitType})})
-
             await updateDoc(userDoc, {visits: arrayUnion({
                     date: currDay.toLocaleDateString("pl-PL"),
                     time: time,
@@ -143,7 +142,7 @@ const Appointments = ({currDay, weekDay, visitType}) => {
                 return (
                     <button key={time} className={`visit-time-button ${disableCloserVisits(currDay, time) ? "unavailable" : ""}`}
                         disabled={
-                        // disableCloserVisits(currDay, time) || 
+                        disableCloserVisits(currDay, time) || 
                         disableSavedVisits(currDay, time) 
                         || tempBlockedButtons.some(btn => btn.date === currDay.toLocaleDateString("pl-PL") && btn.time === time)} 
                         onClick={() => showConfirmation(time)}>
@@ -157,7 +156,7 @@ const Appointments = ({currDay, weekDay, visitType}) => {
                             weekDay={weekDay} 
                             time={selectedTime} 
                             cancel={hideConfirmation}
-                            updateVisit={updateVisit} />
+                            updateVisit={updateVisit}  />
                         : null}            
             </div>
             {successMessage !== "" 

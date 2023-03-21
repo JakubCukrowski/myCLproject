@@ -8,21 +8,17 @@ import Spinner from "react-bootstrap/Spinner";
 const UserVisits = ()=> {
 
     const {user} = useAuth()
-    const userCollection = doc(db, "users", user.uid)
+    const userRef = doc(db, "users", user.uid)
     const [visits, setVisits] = useState([])
-    const [allVisits, setAllVisits] = useState([])
     const [status, setStatus] = useState(false)
-    const visitsRef = doc(db, 'visits', 'ozgzhj0nxfWQIYcs7PUU');
     const [reload, setReload] = useState(false)
 
     //Add delete older visits after new Date
 
     useEffect(() => {
         const getCollection = async () => {
-            const userData = await getDoc(userCollection)
-            const visitsData = await getDoc(visitsRef)
-            setVisits(userData.data().visits)
-            setAllVisits(visitsData.data().scheduledVisits)
+            const userDoc = await getDoc(userRef)
+            setVisits(userDoc.data().visits)
             setStatus(true)
         }
 
@@ -31,14 +27,7 @@ const UserVisits = ()=> {
     }, [reload])
 
     const deleteVisit = async (date, time, type) => {
-        await updateDoc(visitsRef, {scheduledVisits: arrayRemove({
-            date: date,
-            time: time,
-            type: type
-        })
-    })
-
-        await updateDoc(userCollection, {visits: arrayRemove({
+        await updateDoc(userRef, {visits: arrayRemove({
             date: date,
             time: time,
             type: type
