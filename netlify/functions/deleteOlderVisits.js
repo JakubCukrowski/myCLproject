@@ -1,4 +1,4 @@
-import { doc, collection, getDoc, getDocs, query, updateDoc, arrayRemove, where } from "@firebase/firestore";
+import { doc, collection, getDocs, query, updateDoc, arrayRemove, where } from "@firebase/firestore";
 import { db } from "../../src/firebase/firebase";
 
 const usersCollection = collection(db, 'users');
@@ -13,6 +13,7 @@ exports.handler = async function() {
         .filter(visit => visit.time <= `${new Date().getHours()}:${new Date().getMinutes()}`)
 
     if (filterVisits.length > 0) {
+        console.log("dupa");
         for (let i = 0; i < filterVisits.length; i++) {
             const usersVisitsQuery = query(usersCollection, 
                 where("visits", "array-contains-any", [{
