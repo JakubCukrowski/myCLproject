@@ -23,6 +23,8 @@ import { ThreeColumns } from "./components/threeColumns/ThreeColumns";
 
 const App = () => {
 
+    console.log("17:38" < `${new Date().getHours()}:${new Date().getMinutes()}`);
+
     return (
         <AuthContextProvider>
             <Routes>
