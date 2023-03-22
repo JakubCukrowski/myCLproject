@@ -8,8 +8,8 @@ exports.handler = async function() {
     const visits = []
     const querySnapshot = await getDocs(usersCollection);
     querySnapshot.forEach(doc => visits.push(...doc.data().visits))
-    const filterVisits = visits.filter(visit => visit.date <= new Date().toLocaleDateString("pl-PL")
-    && visit.time <= `${new Date().getHours()}:${new Date().getMinutes()}`)
+    const filterVisits = visits.filter(visit => visit.date <= new Date().toLocaleDateString("pl-PL"))
+    // && visit.time <= `${new Date().getHours()}:${new Date().getMinutes()}`)
         console.log(filterVisits);
 
     if (filterVisits.length > 0) {
