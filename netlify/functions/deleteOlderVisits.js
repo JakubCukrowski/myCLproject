@@ -8,9 +8,12 @@ exports.handler = async function() {
     const visits = []
     const querySnapshot = await getDocs(usersCollection);
     querySnapshot.forEach(doc => visits.push(...doc.data().visits))
-    const filterVisits = visits.filter(visit => visit.date <= new Date().toLocaleDateString("pl-PL"))
-    // && visit.time <= `${new Date().getHours()}:${new Date().getMinutes()}`)
-        console.log(filterVisits);
+    const filterVisits = visits.filter(visit => {
+        const visitDate = new Date(visit.date + "" + visit.time)
+        const currentDate = new Date()
+        return visit.date === currentDate && 
+        visitDate.getHours() <= currentDate.getHours() &&
+        visitDate.getMinutes() <= currentDate.getMinutes})
 
     if (filterVisits.length > 0) {
         for (let i = 0; i < filterVisits.length; i++) {
