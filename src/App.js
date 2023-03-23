@@ -21,9 +21,10 @@ import ProtectedRouteToLogin from "./components/protectedRoute/ProtectedRouteToL
 import MyCalendar from "./components/dashboard/dashboardComponents/calendar/Calendar";
 import { ThreeColumns } from "./components/threeColumns/ThreeColumns";
 
-const App = () => {
+import { doc, collection, getDocs, query, updateDoc, arrayRemove, where } from "@firebase/firestore";
+import { db } from "./firebase/firebase";
 
-    console.log("17:38" < `${new Date().getHours()}:${new Date().getMinutes()}`);
+const App = () => {
 
     return (
         <AuthContextProvider>
@@ -55,6 +56,7 @@ const App = () => {
             </Routes>
         </AuthContextProvider>
     )
+
 }
 
 export default App
