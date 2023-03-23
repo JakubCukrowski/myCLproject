@@ -9,13 +9,17 @@ exports.handler = async function() {
     const querySnapshot = await getDocs(usersCollection);
     querySnapshot.forEach(doc => visits.push(...doc.data().visits))
     const filterVisits = visits.filter(visit => {
-        const visitDate = new Date(visit.date + "" + visit.time)
-        const currentDate = new Date()
-        return visit.date === currentDate && 
-        visitDate.getHours() <= currentDate.getHours() &&
-        visitDate.getMinutes() <= currentDate.getMinutes})
+        const visitDate = visit.date.split(".").reverse().join("-")
+        const currentDateLocalFormat = new Date()
+        const currentTime = `${new Date().getHours()}:${new Date().getMinutes()}`
+        const currentDateTransformedToDDMM = new Date().toLocaleDateString("pl-PL").split(".").reverse().join("-")
+        return new Date(visitDate) <= currentDateLocalFormat && 
+        new Date(visitDate + " " + visit.time) <= new Date(currentDateTransformedToDDMM + " " + currentTime)
+    })
+        
 
     if (filterVisits.length > 0) {
+
         for (let i = 0; i < filterVisits.length; i++) {
             const usersVisitsQuery = query(usersCollection, 
                 where("visits", "array-contains-any", [{
