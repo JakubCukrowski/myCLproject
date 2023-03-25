@@ -6,15 +6,18 @@ const usersCollection = collection(db, 'users');
 exports.handler = async function() {
     
     const visits = []
+    const currentDateLocalFormat = new Date()
+    const currentTime = new Date().getHours() <= 9 
+    ? `0${new Date().getHours() + 1}:${new Date().getMinutes()}`
+    : `${new Date().getHours() + 1}:${new Date().getMinutes()}`
+    console.log(currentTime);
     const querySnapshot = await getDocs(usersCollection);
     querySnapshot.forEach(doc => visits.push(...doc.data().visits))
     const filterVisits = visits.filter(visit => {
         const visitDate = visit.date.split(".").reverse().join("-")
-        const currentDateLocalFormat = new Date()
-        const currentTime = `${new Date().getHours()}:${new Date().getMinutes()}`
         const currentDateTransformedToDDMM = new Date().toLocaleDateString("pl-PL").split(".").reverse().join("-")
-        return new Date(visitDate) <= currentDateLocalFormat && 
-        new Date(visitDate + " " + visit.time) <= new Date(currentDateTransformedToDDMM + " " + currentTime)
+        return new Date(visitDate) <= currentDateLocalFormat 
+        && (visit.time && new Date(visitDate + " " + visit.time) <= new Date(currentDateTransformedToDDMM + " " + currentTime))
     })
         
 
