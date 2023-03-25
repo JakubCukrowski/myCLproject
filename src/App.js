@@ -21,9 +21,6 @@ import ProtectedRouteToLogin from "./components/protectedRoute/ProtectedRouteToL
 import MyCalendar from "./components/dashboard/dashboardComponents/calendar/Calendar";
 import { ThreeColumns } from "./components/threeColumns/ThreeColumns";
 
-import { doc, collection, getDocs, query, updateDoc, arrayRemove, where } from "@firebase/firestore";
-import { db } from "./firebase/firebase";
-
 const App = () => {
 
     return (
