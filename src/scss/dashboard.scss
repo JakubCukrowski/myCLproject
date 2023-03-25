@@ -5,89 +5,58 @@
   max-width: 100%;
   position: relative;
 
-  .navbar-wrapper {
-    position: fixed; //static for desktop
-    overflow: hidden; //remove for desktop
-    right: -100%;
-    width: auto;
-    height: 100vh; //auto for desktop
-    transition: 0.3s ease-in-out;
-    padding: 0.8em 0;
-    background-color: $base-color;
-    margin: 0 auto;
+  .container {
+    margin-top: 1em;
+  }
+
+  .dashboard-content-wrapper {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    color: white;
-    opacity: 0;
-    z-index: 400;
-
-    @include tablet {
-      position: static;
-      width: auto;
-      height: auto;
-      overflow: visible;
-      opacity: 1;
-    }
-
-    &.open {
-      opacity: 1;
-      right: 0;
-    }
-
-    button {
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center; 
-      gap: 10px;
-      font-weight: 100;
-
-      &:hover {
-        color: $on-hover-color;
-      }
-    }
-
-    ul {
-      width: 100%;
-      display: flex;
-      flex-direction: column; //row for desktop
-      justify-content: space-around;
-      gap: 30px; //0 for desktop
-      margin-bottom: 0 !important;
+    font-size: 20px;
+    
+    .personal-info {
+      background-color: $base-color;
+      border-radius: 0.8em;
       padding: 1em;
 
-      @include tablet {
-        flex-direction: row;
-        gap: 0;
-        padding: 0;
+      button {
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+        color: white;
+      }
+
+      p {
+        color: white;
       }
 
       a {
         color: white;
         text-decoration: none;
-
-        &:hover {
-          color: $on-hover-color;
-        }
       }
     }
 
     .icon-wrapper {
       display: flex;
-      flex-direction: column; 
-      justify-content: flex-start; 
-      gap: 10px;
-      font-weight: 100;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 0.5em;
+
+      p {
+        margin-bottom: 0 !important;
+      }
     }
   }
 
-  .dashboard-content-wrapper {
+  .dashboard-outlet-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    .user-dashboard {
+      border: 1px solid red
+    }
 
     .spinner-border {
       position: absolute;
@@ -102,25 +71,4 @@
     }
   }
 
-}
-
-.top-line {
-  width: 100%;
-  border-bottom: 0.75px solid gray;
-  display: flex;
-  padding: 1em;
-  justify-content: flex-end;
-
-  @include tablet {
-    display: none;
-  }
-
-  .user-display-top {
-    margin: 0 auto;
-  }
-
-  .menu-button {
-    z-index: 500;
-    position: absolute;
-  }
 }

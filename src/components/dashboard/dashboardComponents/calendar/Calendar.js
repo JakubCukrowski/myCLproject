@@ -1,4 +1,4 @@
-import { faCircleArrowLeft, faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faArrowDown, faChevronDown, faChevronUp, faCircleArrowLeft, faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, {useEffect, useState} from "react";
 import Appointment from "./calendarComponents/Appointments";
@@ -9,7 +9,8 @@ const MyCalendar = () => {
     const weekDays = []
     const [windowSize, setWindowSize] = useState(window.innerWidth)
     const [showDays, setShowDays] = useState(7)
-    const [visitType, setVisitType] = useState("")
+    const [selectedVisitType, setSelectedVisitType] = useState("Wybierz rodzaj wizyty")
+    const [isOpen, setIsOpen] = useState(false)
 
     useEffect(() => {
         const handleResize = () => {
@@ -67,19 +68,30 @@ const MyCalendar = () => {
         weekDays.push(currDate)
     }
 
+    const handleDropdown = () => {
+        setIsOpen(prev => !prev)
+    }
+
+    const handleType = (e) => {
+        setSelectedVisitType(e.target.innerText)
+        setIsOpen(false)
+    }
+
     return (
         <>
             <h2>Umów się na wizytę</h2>
             <div className="dropdown">
-                <label htmlFor="visitType">Wybierz rodzaj wizyty</label>
-                <select name="visitType" defaultValue="" onChange={(e) => setVisitType(e.target.value)}>
-                    <option value="" hidden disabled>-- wybierz --</option>
-                    <option>Konsultacja psychologiczna dla osób dorosłych</option>
-                    <option>Konsultacja psychologiczna dla dzieci i młodzieży</option>
-                    <option>Konsultacja dla par</option>
-                </select>
+                <div className="dropdown-label" onClick={handleDropdown}>
+                    <p>{selectedVisitType}</p>
+                    <FontAwesomeIcon icon={isOpen ? faChevronUp : faChevronDown}/>
+                </div>
+                <div className={`dropdown-options ${isOpen ? "visible" : ""}`} onClick={handleType}>
+                    <p>Konsultacja psychologiczna dla osób dorosłych</p>
+                    <p>Konsultacja psychologiczna dla dzieci i młodzieży</p>
+                    <p>Konsultacja dla par</p>
+                </div>
             </div>
-            {visitType !== "" 
+            {selectedVisitType !== "Wybierz rodzaj wizyty" 
             ? <div className="date-wrapper">
             <button disabled={date <= new Date()} onClick={prevDays}>
                 <FontAwesomeIcon icon={faCircleArrowLeft} fontSize={30}/>
@@ -94,7 +106,7 @@ const MyCalendar = () => {
                         {day.toLocaleDateString("pl-PL")}
                     </p>
                 </div>
-                <Appointment currDay={day} visitType={visitType} weekDay={days[day.getDay()]}/>
+                <Appointment currDay={day} visitType={selectedVisitType} weekDay={days[day.getDay()]}/>
             </div>)}
             <button onClick={nextDays}>
                 <FontAwesomeIcon icon={faCircleArrowRight} fontSize={30}/>
