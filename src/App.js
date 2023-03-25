@@ -22,8 +22,6 @@ import MyCalendar from "./components/dashboard/dashboardComponents/calendar/Cale
 import { ThreeColumns } from "./components/threeColumns/ThreeColumns";
 
 const App = () => {
-    const currentTime = `${new Date().getHours()}:${new Date().getMinutes()}`
-    console.log(currentTime);
 
     return (
         <AuthContextProvider>
