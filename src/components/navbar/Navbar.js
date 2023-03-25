@@ -1,10 +1,13 @@
-import {Link, Outlet, useLocation} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import '../../scss/navbar.scss'
-import Footer from "../footer/Footer";
 import {useAuth} from "../context/AuthContext";
 import {useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBars, faXmark, faHeart} from "@fortawesome/free-solid-svg-icons";
+import {
+    faHeart,
+    faBars,
+    faXmark
+} from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
     const {user} = useAuth()
@@ -66,7 +69,7 @@ const Navbar = () => {
             <section className="navbar-section" style={{position: pathname === "/" ? "fixed" : "sticky"}}>
                 <div className="navbar-container">
                     <Link to="/">
-                        <div className="logo-container">
+                        <div className="logo-container" onClick={scrollToTop}>
                             <FontAwesomeIcon icon={faHeart} fontSize={80} color={"white"} style={{paddingLeft: 10}}/>
                             <p>Pracownia psychologiczna</p>
                         </div>
@@ -80,15 +83,13 @@ const Navbar = () => {
                         <li onClick={isOpen ? showHamMenu : null}><Link onClick={scrollToTop} to="/prices">Cennik</Link></li>
                         <li onClick={isOpen ? showHamMenu : null}><Link onClick={scrollToTop} to="/gallery">Galeria</Link></li>
                         <li onClick={isOpen ? showHamMenu : null}>
-                            {loggingIn
-                                ? <Link onClick={scrollToTop} to="login">Zaloguj</Link>
-                                : <Link to="dashboard/savevisit">Moje konto</Link>}
-                        </li>
-                    </ul>
+                        {loggingIn
+                            ? <Link onClick={scrollToTop} to="login">Zaloguj</Link>
+                            : <Link to="/dashboard/savevisit">Moje konto</Link>}
+                    </li>
+                </ul>
                 </div>
             </section>
-            <Outlet/>
-            <Footer/>
         </>
 
     )

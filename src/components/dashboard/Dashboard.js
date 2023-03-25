@@ -1,33 +1,19 @@
-import React, {useEffect, useState} from "react";
-import {Outlet} from "react-router-dom";
-import {Link, useNavigate} from "react-router-dom";
+import React, {useState} from "react";
+import {Outlet, Link, navigate, useNavigate} from "react-router-dom";
+import Navbar from "../navbar/Navbar"
+import { useAuth } from "../context/AuthContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faCalendarCheck,
     faCalendarPlus,
     faGear,
-    faHouse,
     faPowerOff,
-    faBars,
-    faXmark
 } from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {useAuth} from "../context/AuthContext";
-import Spinner from "react-bootstrap/Spinner";
 
 const Dashboard = () => {
+    const [isBlocked, setIsBlocked] = useState(false)
     const navigate = useNavigate()
     const {user, logout} = useAuth()
-    const [status, setStatus] = useState(false)
-    const [isOpen, setIsOpen] = useState(false)
-    const [isBlocked, setIsBlocked] = useState(false)
-
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            setStatus(true)
-        }, 200)
-
-        return () => timeout
-    }, [])
 
     const handleLogOut = async () => {
         try {
@@ -38,64 +24,42 @@ const Dashboard = () => {
         }
     }
 
-    const handleHamburgerMenu = () => {
-        if (window.innerWidth <= 900) {
-            setIsOpen(prev => !prev)
-        }
-        if ((isOpen === false && window.innerWidth <= 900)) {
-            document.querySelector("body").style.overflow = "hidden"
-        } else {
-            document.querySelector("body").style.overflow = "auto"
-        }
-    }
-
     return (
-        <section className={`dashboard ${isOpen || isBlocked ? "blocked" : ""}`}>
-            <div className={`navbar-wrapper ${isOpen ? "open" : ""}`}>
-                {status ? <h3>Witaj, {user.displayName}</h3> : <Spinner/>}
-                <ul>
-                    <Link onClick={handleHamburgerMenu} to="/">
+        <section className={`dashboard ${isBlocked ? "blocked" : ""}`}>
+            <Navbar/>
+            <div className="container">
+            <div className="dashboard-content-wrapper">
+                <ul className="personal-info">
+                    <p>Miło Cię widzieć, {user.displayName}.</p>
+                    <Link to="uservisits">
                         <li className="icon-wrapper">
-                            <FontAwesomeIcon fontSize={30} icon={faHouse}/>
-                            <p>Strona główna</p>
-                        </li>
-                    </Link>
-                    <Link onClick={handleHamburgerMenu} to="uservisits">
-                        <li className="icon-wrapper">
-                            <FontAwesomeIcon fontSize={30} icon={faCalendarCheck}/>
+                            <FontAwesomeIcon fontSize={20} icon={faCalendarCheck}/>
                             <p>Twoje wizyty</p>
                         </li>
                     </Link>
-                    <Link onClick={handleHamburgerMenu} to="savevisit">
+                    <Link to="savevisit">
                         <li className="icon-wrapper">
-                            <FontAwesomeIcon fontSize={30} icon={faCalendarPlus}/>
+                            <FontAwesomeIcon fontSize={20} icon={faCalendarPlus}/>
                             <p>Umów wizytę</p>
                         </li>
                     </Link>
-                    <Link onClick={handleHamburgerMenu} to="settings">
+                    <Link to="settings">
                         <li className="icon-wrapper">
-                            <FontAwesomeIcon fontSize={30} icon={faGear}/>
+                            <FontAwesomeIcon fontSize={20} icon={faGear}/>
                             <p>Ustawienia konta</p>
                         </li>
                     </Link>
                     <li className="icon-wrapper">
                         <button onClick={handleLogOut}>
-                            <FontAwesomeIcon fontSize={30} icon={faPowerOff}/>
+                            <FontAwesomeIcon fontSize={20} icon={faPowerOff}/>
                             <p>Wyloguj</p>
                         </button>
                     </li>
                 </ul>
+                <div className="dashboard-outlet-wrapper"> 
+                    <Outlet context={[isBlocked, setIsBlocked]}/>
+                </div>
             </div>
-            <div className="top-line">
-                {isOpen ? null : <h3 className="user-display-top">{`Witaj, ${user.displayName}`}</h3>}
-                <FontAwesomeIcon className="menu-button"
-                                icon={isOpen ? faXmark : faBars}
-                                onClick={handleHamburgerMenu}
-                                style={{zIndex: isBlocked ? 0 : 500}}
-                                fontSize={30}/>
-            </div>
-            <div className="dashboard-content-wrapper">
-                <Outlet context={[isBlocked, setIsBlocked]}/>
             </div>
         </section>
     )
