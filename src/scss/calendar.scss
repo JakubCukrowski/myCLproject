@@ -1,26 +1,60 @@
 .dropdown {
   width: 100%;
+  position: relative;
+
+  @include tablet {
+    width: 40%;
+  }
+
+
 
   .dropdown-label {
-    border: 0.5px solid $base-color;
+    background-color: $base-color;
+    color: white;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
     padding: 0.4em;
-    margin-bottom: 1em;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    cursor: pointer;
   
     p {
       margin-bottom: 0 !important;
     }
+
+    @include tablet {
+      // width: 400px;
+    }
+    
   }
   
   .dropdown-options {
     display: none;
+    text-align: center;
     transition: all 0.3s;
     position: absolute;
-    border: 0.5px solid $base-color;
     background-color: white;
+    color: white;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    overflow-wrap: break-word;
+    width: 100%;
+
+    p {
+      background-color: rgba($base-color, 0.7);
+      padding: 0.4em;
+      margin: 0 !important;
+      cursor: pointer;
+
+      &:nth-child(2) {
+        background-color: $base-color;
+      }
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
 
     &.visible {
       display: block;
@@ -34,6 +68,11 @@
   padding: 1.4em 0.2em;
   border: 1px solid $base-color;
   border-radius: 1em;
+  margin: 1.4em 0;
+
+  @include tablet {
+    font-size: 16px;
+  }
 
   .date-content {
     text-align: center;
@@ -47,7 +86,7 @@
     }
 
     @include tablet {
-      width: 8em;
+      width: 7em;
     }
   }
 

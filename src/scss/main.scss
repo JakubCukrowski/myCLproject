@@ -12,6 +12,17 @@
 @import "visits.scss";
 @import "accountSettings.scss";
 @import "threeColumns.scss";
+// @import "bootstrap/dist/css/bootstrap.min.css";
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/utilities";
+@import "bootstrap/scss/helpers";
+@import "bootstrap/scss/utilities/api";
+@import "bootstrap/scss/carousel";
+@import "bootstrap/scss/buttons";
+@import "bootstrap/scss/reboot";
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;500;700&display=swap');
 
 * {

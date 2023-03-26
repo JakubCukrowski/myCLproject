@@ -13,7 +13,9 @@ const Appointments = ({currDay, weekDay, visitType}) => {
     
     const usersCollection = collection(db, "users")
     const [disabledTimes, setDisabledTimes] = useState([])
-    const appointmentDate = currDay.toLocaleDateString("pl-PL");
+    const appointmentDate = currDay.toLocaleDateString("pl-PL").length < 10 
+        ? `0${currDay.toLocaleDateString("pl-PL")}` 
+        : currDay.toLocaleDateString("pl-PL");
     const currentTime = new Date().toLocaleTimeString("pl-PL");
 
     const [isClicked, setIsClicked] = useState(false)
@@ -39,7 +41,7 @@ const Appointments = ({currDay, weekDay, visitType}) => {
             if (checkIfVisitIsUnavailable(appointmentDate, time)) {
                 tempDisabledTimes.push({
                     time: time, 
-                    date: currDay.toLocaleDateString("pl-PL")})
+                    date: appointmentDate})
             }
         })
 
@@ -73,13 +75,13 @@ const Appointments = ({currDay, weekDay, visitType}) => {
     const updateVisit = async (time) => {
         const userDoc = doc(usersCollection, user.uid)
         const visitsQuery = query(usersCollection, 
-            where("date", "==", currDay.toLocaleDateString("pl-PL"), 
+            where("date", "==", appointmentDate, 
             where("time", "==", time) ))
         const querySnapShot = await getDocs(visitsQuery)
 
         if (querySnapShot.size === 0) {
             await updateDoc(userDoc, {visits: arrayUnion({
-                    date: currDay.toLocaleDateString("pl-PL"),
+                    date: appointmentDate,
                     time: time,
                     type: visitType})})
 
@@ -93,7 +95,7 @@ const Appointments = ({currDay, weekDay, visitType}) => {
         setIsBlocked(true)
         setSelectedTime(time)
         await updateDoc(tempBlockedVisits, {tempBlockedVisits: arrayUnion({
-            date: currDay.toLocaleDateString("pl-PL"),
+            date: appointmentDate,
             time: time,
             type: visitType
         })})
@@ -112,14 +114,14 @@ const Appointments = ({currDay, weekDay, visitType}) => {
 
     const disableCloserVisits = (date, time) => {
         date.setHours(parseInt(time.split(":")[0]), parseInt(time.split(":")[1]), 0)
-        if (date.toLocaleDateString("pl-PL") === new Date().toLocaleDateString("pl-PL")
+        if (appointmentDate === new Date().toLocaleDateString("pl-PL")
         && new Date().getHours() + 1 >= date.getHours()) {
             return true
         }
     }
 
     const disableSavedVisits = (date, time) => {
-        if (disabledTimes.some((data => data.time === time && data.date === date.toLocaleDateString("pl-PL")))) {
+        if (disabledTimes.some((data => data.time === time && data.date === appointmentDate))) {
             return true
         }
     }
@@ -144,7 +146,7 @@ const Appointments = ({currDay, weekDay, visitType}) => {
                         disabled={
                         disableCloserVisits(currDay, time) || 
                         disableSavedVisits(currDay, time) 
-                        || tempBlockedButtons.some(btn => btn.date === currDay.toLocaleDateString("pl-PL") && btn.time === time)} 
+                        || tempBlockedButtons.some(btn => btn.date === appointmentDate && btn.time === time)} 
                         onClick={() => showConfirmation(time)}>
                             {time}
                     </button>
@@ -152,7 +154,7 @@ const Appointments = ({currDay, weekDay, visitType}) => {
             })}
             {isClicked 
                         ? <Popup 
-                            date={currDay.toLocaleDateString("pl-PL")} 
+                            date={appointmentDate} 
                             weekDay={weekDay} 
                             time={selectedTime} 
                             cancel={hideConfirmation}

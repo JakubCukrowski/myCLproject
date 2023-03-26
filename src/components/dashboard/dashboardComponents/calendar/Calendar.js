@@ -15,19 +15,23 @@ const MyCalendar = () => {
     useEffect(() => {
         const handleResize = () => {
             setWindowSize(window.innerWidth) 
-            if (window.innerWidth > 1150) {
+            if (window.innerWidth > 1300) {
                 setShowDays(7)
             }
             
-            if (window.innerWidth <= 1150) {
+            if (window.innerWidth <= 1300) {
                 setShowDays(6)
             } 
             
-            if (window.innerWidth <= 1000) {
+            if (window.innerWidth <= 1200) {
+                setShowDays(5)
+            }
+
+            if (window.innerWidth <= 1050) {
                 setShowDays(4)
             }
 
-            if (window.innerWidth <= 750) {
+            if (window.innerWidth <= 690) {
                 setShowDays(3)
             }
 
@@ -88,7 +92,7 @@ const MyCalendar = () => {
                 <div className={`dropdown-options ${isOpen ? "visible" : ""}`} onClick={handleType}>
                     <p>Konsultacja psychologiczna dla osób dorosłych</p>
                     <p>Konsultacja psychologiczna dla dzieci i młodzieży</p>
-                    <p>Konsultacja dla par</p>
+                    <p>Konsultacja psychologiczna dla par</p>
                 </div>
             </div>
             {selectedVisitType !== "Wybierz rodzaj wizyty" 
@@ -103,7 +107,7 @@ const MyCalendar = () => {
                         {days[day.getDay()]} 
                     </p>
                     <p>
-                        {day.toLocaleDateString("pl-PL")}
+                        {day.toLocaleDateString("pl-PL").length < 10 ? `0${day.toLocaleDateString("pl-PL")}` : day.toLocaleDateString("pl-PL")}
                     </p>
                 </div>
                 <Appointment currDay={day} visitType={selectedVisitType} weekDay={days[day.getDay()]}/>

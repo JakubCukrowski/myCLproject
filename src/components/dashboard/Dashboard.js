@@ -31,24 +31,24 @@ const Dashboard = () => {
             <div className="dashboard-content-wrapper">
                 <ul className="personal-info">
                     <p>Miło Cię widzieć, {user.displayName}.</p>
-                    <Link to="uservisits">
-                        <li className="icon-wrapper">
+                    <li className="icon-wrapper">
+                        <Link to="uservisits">
                             <FontAwesomeIcon fontSize={20} icon={faCalendarCheck}/>
                             <p>Twoje wizyty</p>
-                        </li>
-                    </Link>
-                    <Link to="savevisit">
-                        <li className="icon-wrapper">
+                        </Link>
+                    </li>
+                    <li className="icon-wrapper">
+                        <Link to="savevisit">
                             <FontAwesomeIcon fontSize={20} icon={faCalendarPlus}/>
                             <p>Umów wizytę</p>
-                        </li>
-                    </Link>
-                    <Link to="settings">
-                        <li className="icon-wrapper">
+                        </Link>
+                    </li>
+                    <li className="icon-wrapper">
+                        <Link to="settings">
                             <FontAwesomeIcon fontSize={20} icon={faGear}/>
                             <p>Ustawienia konta</p>
-                        </li>
-                    </Link>
+                        </Link>    
+                    </li>
                     <li className="icon-wrapper">
                         <button onClick={handleLogOut}>
                             <FontAwesomeIcon fontSize={20} icon={faPowerOff}/>
