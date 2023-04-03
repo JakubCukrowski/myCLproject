@@ -39,6 +39,7 @@
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
     overflow-wrap: break-word;
+    overflow: hidden;
     width: 100%;
 
     p {
@@ -101,6 +102,23 @@
       &:hover {
         opacity: 0.6;
       }
+    }
+  }
+}
+
+.information-text {
+  padding-top: 1em;
+  text-align: center;
+  font-size: 1.4em;
+
+  a {
+    text-decoration: none;
+    color: $on-hover-color;
+    transition: 0.2s;
+
+    &:hover {
+      opacity: 0.6;
+      color: $on-hover-color;
     }
   }
 }
