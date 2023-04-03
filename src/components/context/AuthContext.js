@@ -16,7 +16,9 @@ export const AuthContextProvider = ({ children }) => {
     const [loading, setLoading] = useState(true)
     const usersRef = collection(db, "users")
     const [users, setUsers] = useState([])
-    const currentDate = new Date().toLocaleDateString("pl-PL");
+    const currentDate = new Date().toLocaleDateString("pl-PL").length < 10 
+    ? `0${new Date().toLocaleDateString("pl-PL")}` 
+    : new Date().toLocaleDateString("pl-PL");;
 
     const createAccount = (email, password, name) => {
         return createUserWithEmailAndPassword(auth, email, password)

@@ -114,14 +114,14 @@ const Appointments = ({currDay, weekDay, visitType}) => {
 
     const disableCloserVisits = (date, time) => {
         date.setHours(parseInt(time.split(":")[0]), parseInt(time.split(":")[1]), 0)
-        if (appointmentDate === new Date().toLocaleDateString("pl-PL")
+        if (date.toLocaleDateString("pl-PL") === new Date().toLocaleDateString("pl-PL")
         && new Date().getHours() + 1 >= date.getHours()) {
             return true
         }
     }
 
     const disableSavedVisits = (date, time) => {
-        if (disabledTimes.some((data => data.time === time && data.date === appointmentDate))) {
+        if (disabledTimes.some((data => data.time === time && data.date === date))) {
             return true
         }
     }
@@ -145,7 +145,7 @@ const Appointments = ({currDay, weekDay, visitType}) => {
                     <button key={time} className={`visit-time-button ${disableCloserVisits(currDay, time) ? "unavailable" : ""}`}
                         disabled={
                         disableCloserVisits(currDay, time) || 
-                        disableSavedVisits(currDay, time) 
+                        disableSavedVisits(appointmentDate, time) 
                         || tempBlockedButtons.some(btn => btn.date === appointmentDate && btn.time === time)} 
                         onClick={() => showConfirmation(time)}>
                             {time}

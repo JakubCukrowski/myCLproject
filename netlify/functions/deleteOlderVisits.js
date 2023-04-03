@@ -8,8 +8,8 @@ exports.handler = async function() {
     const visits = []
     const currentDateLocalFormat = new Date()
     const currentTime = new Date().getHours() <= 9 
-    ? `0${new Date().getHours() + 1}:${new Date().getMinutes()}`
-    : `${new Date().getHours() + 1}:${new Date().getMinutes()}`
+    ? `0${new Date().getHours() + 2}:${new Date().getMinutes()}`
+    : `${new Date().getHours() + 2}:${new Date().getMinutes()}`
     console.log(currentTime);
     const querySnapshot = await getDocs(usersCollection);
     querySnapshot.forEach(doc => visits.push(...doc.data().visits))
