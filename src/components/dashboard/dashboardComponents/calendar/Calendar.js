@@ -2,6 +2,7 @@ import { faArrowDown, faChevronDown, faChevronUp, faCircleArrowLeft, faCircleArr
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, {useEffect, useState} from "react";
 import Appointment from "./calendarComponents/Appointments";
+import { Link, useNavigate } from "react-router-dom";
 
 const MyCalendar = () => {
     const [date, setDate] = useState(new Date())
@@ -11,6 +12,7 @@ const MyCalendar = () => {
     const [showDays, setShowDays] = useState(7)
     const [selectedVisitType, setSelectedVisitType] = useState("Wybierz rodzaj wizyty")
     const [isOpen, setIsOpen] = useState(false)
+    const navigate = useNavigate()
 
     useEffect(() => {
         const handleResize = () => {
@@ -117,6 +119,11 @@ const MyCalendar = () => {
             </button>
         </div> 
         : null}
+        <div className="information-text">
+            { selectedVisitType === "Wybierz rodzaj wizyty" ? <p>Wybierz z menu powyżej<br/> na jaką wizytę chciałbyś się zapisać.</p>
+            : <p>Jeśli masz jakiekolwiek pytania, zapraszamy do <Link to="/contact">kontaktu</Link></p>}
+        </div> 
+        
         </>
     )
 }

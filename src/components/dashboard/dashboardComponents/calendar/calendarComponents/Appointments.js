@@ -88,6 +88,12 @@ const Appointments = ({currDay, weekDay, visitType}) => {
                     setIsClicked(false)
                     setSuccessMessage("Wizyta zarezerwowana! Do zobaczenia.")
         }
+
+        await updateDoc(tempBlockedVisits, {tempBlockedVisits: arrayRemove({
+            date: appointmentDate,
+            time: time,
+            type: visitType
+        })})
     }
 
     const showConfirmation = async (time) => {
