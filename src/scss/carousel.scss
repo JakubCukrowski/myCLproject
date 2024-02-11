@@ -10,8 +10,8 @@
 }
 
 .carousel-indicators [data-bs-target] {
-  width: 8px;
-  height: 8px;
+  width: 8px !important;
+  height: 8px !important;
   border-radius: 50%;
 }
 

@@ -1,5 +1,16 @@
 .user-data-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  width: 80%;
+  padding: 40px;
+  height: 50vh;
+  border-radius: 10px;
+  background-color: rgba(24, 137, 130, 0.6);
+  color: white;
+
+  @include tablet {
+   
+    width: 50%;
+  }
 }
